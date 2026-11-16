@@ -158,7 +158,7 @@ if ( ! class_exists( 'Illdy_Entry_Meta_Output' ) ) {
 		 *
 		 * @return void
 		 */
-		private function __wakeup() {
+		public function __wakeup() {
 		}
 	}
 }// End if().

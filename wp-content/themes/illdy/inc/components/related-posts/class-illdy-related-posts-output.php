@@ -62,7 +62,7 @@ if ( ! class_exists( 'Illdy_Related_Posts_Output' ) ) {
 		 *
 		 * @return void
 		 */
-		private function __wakeup() {
+		public function __wakeup() {
 		}
 
 		/**

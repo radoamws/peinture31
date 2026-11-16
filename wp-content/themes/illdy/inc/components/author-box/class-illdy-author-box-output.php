@@ -47,7 +47,7 @@ if ( ! class_exists( 'Illdy_Author_Box_Output' ) ) {
 		 *
 		 * @return void
 		 */
-		private function __wakeup() {
+		public function __wakeup() {
 		}
 
 		/**
