@@ -56,6 +56,8 @@ class wfScanner {
 	const SUMMARY_SCANNED_USERS = 'scannedUsers';
 	const SUMMARY_SCANNED_URLS = 'scannedURLs';
 	
+	const CENTRAL_STAGE_UPDATE_THRESHOLD = 5;
+	
 	private $_scanType = false;
 	
 	private $_summary = false;
@@ -437,19 +439,87 @@ class wfScanner {
 	 * Returns the currently defined custom schedule. This is only applicable when the scheduling mode is 
 	 * SCAN_SCHEDULING_MODE_MANUAL and the manual type is set to MANUAL_SCHEDULING_CUSTOM.
 	 * 
-	 * @return array The array will be of the format array(0 => array(0 => 0, 1 => 0 ... 23 => 0), ... 6 => array(...))
+	 * @return array The array will be of the format array(0 => array(0 => false, 1 => false ... 23 => false), ... 6 => array(...))
 	 */
 	public function customSchedule() {
-		$normalizedSchedule = array_fill(0, 7, array_fill(0, 24, 0));
+		$normalizedSchedule = array_fill(0, 7, array_fill(0, 24, false));
 		$storedSchedule = wfConfig::get_ser('scanSched', array());
 		if (is_array($storedSchedule) && !empty($storedSchedule) && is_array($storedSchedule[0])) {
 			foreach ($storedSchedule as $dayNumber => $day) {
 				foreach ($day as $hourNumber => $enabled) {
-					$normalizedSchedule[$dayNumber][$hourNumber] = wfUtils::truthyToInt($enabled);
+					$normalizedSchedule[$dayNumber][$hourNumber] = wfUtils::truthyToBoolean($enabled);
 				}
 			}
 		}
 		return $normalizedSchedule;
+	}
+	
+	public function shouldRunQuickScan() {
+		if (!$this->isEnabled()) {
+			return false;
+		}
+		
+		if (time() - $this->lastQuickScanTime() < 79200) { //Do not run within 22 hours of a completed quick scan
+			return false;
+		} 
+		
+		$lastFullScanCompletion = (int) $this->lastScanTime();
+		if (time() - $lastFullScanCompletion < 43200) { //Do not run within 12 hours of a completed full scan
+			return false;
+		}
+		
+		$nextFullScan = $this->nextScheduledScanTime();
+		if ($nextFullScan === false || $nextFullScan - time() < 3600) { //Scans are not running (e.g., custom schedule selected with no times configured) or if scheduled, then avoid running within 1 hour of a pending full scan
+			return false;
+		}
+		
+		$now = time();
+		$tzOffset = wfUtils::formatLocalTime('Z', $now);
+		$currentDayOfWeekUTC = date('w', $now);
+		$currentHourUTC = date('G', $now);
+		$preferredHourUTC = false;
+		
+		if ($this->schedulingMode() == wfScanner::SCAN_SCHEDULING_MODE_MANUAL) {
+			$manualType = $this->manualSchedulingType();
+			$preferredHourUTC = fmod(round(($this->manualSchedulingStartHour() * 3600 - $tzOffset) / 3600, 2), 24); //round() rather than floor() to account for fractional time zones
+			switch ($manualType) {
+				case self::MANUAL_SCHEDULING_ONCE_DAILY:
+				case self::MANUAL_SCHEDULING_EVERY_OTHER_DAY:
+				case self::MANUAL_SCHEDULING_WEEKDAYS:
+				case self::MANUAL_SCHEDULING_WEEKENDS:
+				case self::MANUAL_SCHEDULING_ODD_DAYS_WEEKENDS:
+					$preferredHourUTC = fmod($preferredHourUTC + 12, 24);
+					break;
+				case self::MANUAL_SCHEDULING_TWICE_DAILY:
+					$preferredHourUTC = fmod($preferredHourUTC + 6, 24); //When automatic scans run twice daily, possibly run a quick scan 6 hours offset (will only run if either scheduled one fails for some reason)
+					break;
+				case self::MANUAL_SCHEDULING_CUSTOM: //Iterate from the current day backwards and base it on the first time found, may or may not actually run depending on the spacing of the custom schedule
+					$preferredHourUTC = false;
+					$oneWeekSchedule = $this->customSchedule();
+					for ($i = 7; $i > 0; $i--) { //Sample sequence for `$currentDayOfWeekUTC == 2` => 2, 1, 0, 6, 5, 4, 3
+						$checkingDayNumber = ($currentDayOfWeekUTC + $i) % 7;
+						$day = $oneWeekSchedule[$checkingDayNumber];
+						$dayHour = array_search(true, $day);
+						if ($dayHour !== false) {
+							$preferredHourUTC = fmod(round(($dayHour * 3600 - $tzOffset) / 3600, 2) + 12, 24);
+							break;
+						}
+					}
+					break;
+			}
+			
+			if ($preferredHourUTC !== false) { //The preferred hour of a manual scan schedule has been determined, run the quick scan at the desired offset if we're in that hour
+				return ($currentHourUTC >= $preferredHourUTC);
+			}
+		}
+		
+		$noc1ScanSchedule = wfConfig::get_ser('noc1ScanSchedule', array());
+		if (count($noc1ScanSchedule)) {
+			$preferredHourUTC = (int) fmod( (fmod($noc1ScanSchedule[0], 86400) / 3600) + 12, 24);
+			return ($currentHourUTC >= $preferredHourUTC);
+		}
+		
+		return false; //If we've reached this point, the scan config is in a weird state so just skip the quick scan
 	}
 	
 	/**
@@ -619,6 +689,13 @@ class wfScanner {
 		wfConfig::set_ser('scanStageStatuses', $this->_defaultStageStatuses(), false, wfConfig::DONT_AUTOLOAD);
 	}
 	
+	private function _shouldForceUpdate($stageID) {
+		if ($stageID == wfScanner::STAGE_MALWARE_SCAN) {
+			return true;
+		}
+		return false;
+	}
+	
 	/**
 	 * Increments the stage started counter and marks it as running if not already in that state.
 	 * 
@@ -636,7 +713,7 @@ class wfScanner {
 		
 		$runningStatus[$stageID]['started'] += 1;
 		wfConfig::set_ser('scanStageStatuses', $runningStatus, false, wfConfig::DONT_AUTOLOAD);
-		if (wfCentral::isConnected()) {
+		if (wfCentral::isConnected() && ($this->_shouldForceUpdate($stageID) || (time() - wfConfig::getInt('lastScanStageStatusUpdate', 0)) > self::CENTRAL_STAGE_UPDATE_THRESHOLD)) {
 			wfCentral::updateScanStatus($runningStatus);
 		}
 	}
@@ -654,7 +731,7 @@ class wfScanner {
 		
 		$runningStatus = wfConfig::get_ser('scanStageStatuses', array(), false);
 		
-		if ($runningStatus[$stageID]['status'] == self::STATUS_RUNNING && ($status == wfIssues::STATUS_PROBLEM)) {
+		if ($runningStatus[$stageID]['status'] == self::STATUS_RUNNING && ($status == wfIssues::STATE_PROBLEM)) {
 			$runningStatus[$stageID]['status'] = self::STATUS_RUNNING_WARNING;
 		}
 		
@@ -670,7 +747,17 @@ class wfScanner {
 		
 		wfConfig::set_ser('scanStageStatuses', $runningStatus, false, wfConfig::DONT_AUTOLOAD);
 		if (wfCentral::isConnected()) {
-			wfCentral::updateScanStatus($runningStatus);
+			$forceSend = true; //Force sending the last stage completion update even if the timing would otherwise prevent it
+			foreach ($runningStatus as $stageID => $stage) {
+				if ($runningStatus[$stageID]['finished'] < $runningStatus[$stageID]['expected']) {
+					$forceSend = false;
+					break;
+				}
+			}
+			
+			if ($forceSend || (time() - wfConfig::getInt('lastScanStageStatusUpdate', 0)) > self::CENTRAL_STAGE_UPDATE_THRESHOLD) {
+				wfCentral::updateScanStatus($runningStatus);
+			}
 		}
 
 	}
@@ -690,6 +777,27 @@ class wfScanner {
 				return $this->_scanType;
 		}
 		return self::SCAN_TYPE_STANDARD;
+	}
+	
+	/**
+	 * Returns the display name for the selected type of the scan.
+	 *
+	 * @return string
+	 */
+	public function scanTypeName() {
+		switch ($this->_scanType) {
+			case self::SCAN_TYPE_QUICK:
+				return __('Quick Scan', 'wordfence');
+			case self::SCAN_TYPE_LIMITED:
+				return __('Limited Scan', 'wordfence');
+			case self::SCAN_TYPE_HIGH_SENSITIVITY:
+				return __('High Sensitivity', 'wordfence');
+			case self::SCAN_TYPE_CUSTOM:
+				return __('Custom Scan', 'wordfence');
+			case self::SCAN_TYPE_STANDARD:
+			default:
+				return __('Standard Scan', 'wordfence');
+		}
 	}
 	
 	/**
@@ -775,7 +883,7 @@ class wfScanner {
 			$subtraction = min($this->_normalizedPercentageToDisplay($percentage), $remainingPercentage);
 			$statusList[] = array(
 				'percentage' => $subtraction,
-				'title' => sprintf(_n('Enable %d scan option.', 'Enable %d scan options.', $disabledOptionCount,'wordfence'), number_format_i18n($disabledOptionCount)),
+				'title' => sprintf(/* translators: option count */ _n('Enable %d scan option.', 'Enable %d scan options.', $disabledOptionCount,'wordfence'), number_format_i18n($disabledOptionCount)),
 			);
 		}
 
@@ -1028,6 +1136,19 @@ class wfScanner {
 	}
 	
 	/**
+	 * Returns an array of all summary items.
+	 *
+	 * @return array
+	 */
+	public function getAllSummaryItems() {
+		$this->_fetchSummaryItems();
+		if (is_array($this->_summary)) {
+			return $this->_summary;
+		}
+		return array();
+	}
+	
+	/**
 	 * Sets the summary item $key as $value.
 	 * 
 	 * @param $key
@@ -1108,7 +1229,7 @@ class wfScanner {
 					$schedule = array_fill(0, 14, array_fill(0, 24, 0));
 					foreach ($schedule as $dayNumber => &$day) {
 						$day[$preferredHour] = 1;
-						$day[($preferredHour + 12) % 24] = 1;
+						$day[fmod($preferredHour + 12, 24)] = 1;
 					}
 					break;
 				case self::MANUAL_SCHEDULING_EVERY_OTHER_DAY:
@@ -1160,20 +1281,20 @@ class wfScanner {
 			foreach ($schedule as $dayNumber => $day) {
 				foreach ($day as $hourNumber => $enabled) {
 					if ($enabled) {
-						$effectiveHour = round(($hourNumber * 3600 - $tzOffset) / 3600, 2); //round() rather than floor() to account for fractional time zones
-						$wrappedHour = ($effectiveHour + 24) % 24;
+						$effectiveHour = round(($hourNumber * 3600 - $tzOffset) / 3600); //round() rather than floor() to account for fractional time zones
+						$wrappedHour = (int) fmod($effectiveHour + 24, 24);
 						if ($effectiveHour < 0) {
 							if ($dayNumber > 0) {
-								$shiftedSchedule[$dayNumber - 1][$wrappedHour] = 1;
+								$shiftedSchedule[$dayNumber - 1][$wrappedHour] = true;
 							}
 						}
 						else if ($effectiveHour > 23) {
 							if ($dayNumber < count($schedule) - 1) {
-								$shiftedSchedule[$dayNumber + 1][$wrappedHour] = 1;
+								$shiftedSchedule[$dayNumber + 1][$wrappedHour] = true;
 							}
 						}
 						else {
-							$shiftedSchedule[$dayNumber][$effectiveHour] = 1;
+							$shiftedSchedule[$dayNumber][$effectiveHour] = true;
 						}
 					}
 				}
@@ -1201,7 +1322,7 @@ class wfScanner {
 						$scanTime = $periodStart + $dayNumber * 86400 + $hourNumber * 3600 + wfWAFUtils::random_int(0, 3600);
 						wordfence::status(4, 'info', sprintf(
 							/* translators: 1. Day of week. 2. Hour of day. 3. Localized date. */
-							__("Scheduled time for day %s hour %s is: %s", 'wordfence'),
+							__('Scheduled time for day %1$s hour %2$s is: %3$s', 'wordfence'),
 							$dayNumber,
 							$hourNumber,
 							wfUtils::formatLocalTime('l jS \of F Y h:i:s A P', $scanTime)
@@ -1231,11 +1352,31 @@ class wfScanner {
 		wfConfig::set_ser('allScansScheduled', array());
 	}
 	
+	public function nextScheduledScanTime() {
+		$nextTime = false;
+		$cron = _get_cron_array();
+		foreach($cron as $key => $val){
+			if(isset($val['wordfence_start_scheduled_scan'])){
+				$nextTime = $key;
+				break;
+			}
+		}
+		return $nextTime;
+	}
+	
 	public function lastScanTime() {
 		return wfConfig::get('scanTime');
 	}
 	
 	public function recordLastScanTime() {
 		wfConfig::set('scanTime', microtime(true));
+	}
+	
+	public function lastQuickScanTime() {
+		return wfConfig::get('lastQuickScan', 0);
+	}
+	
+	public function recordLastQuickScanTime() {
+		wfConfig::set('lastQuickScan', microtime(true));
 	}
 }

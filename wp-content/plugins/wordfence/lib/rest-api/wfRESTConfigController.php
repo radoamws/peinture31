@@ -5,13 +5,22 @@ use WordfenceLS\Controller_Settings;
 require_once(dirname(__FILE__) . '/wfRESTBaseController.php');
 
 class wfRESTConfigController extends wfRESTBaseController {
+	const WF_CENTRAL_USER_MARKER = '_wf_central_user_'; //Marker used to indicate that the site was disconnected by a user associated with the site's Central account
+	const WF_CENTRAL_FAILURE_MARKER = '_wf_central_failure_'; //Marker used to indicate that the site was disconnected due to exceeding the error threshold
 
 	public static function disconnectConfig($adminEmail = null) {
 		global $wpdb;
 		delete_transient('wordfenceCentralJWT' . wfConfig::get('wordfenceCentralSiteID'));
 
 		if (is_null($adminEmail)) {
-			$adminEmail = wfConfig::get('wordfenceCentralConnectEmail');
+			$user = wp_get_current_user();
+			if ($user && $user->exists()) {
+				$adminEmail = $user->user_email;
+			}
+			
+			if (is_null($adminEmail)) {
+				$adminEmail = wfConfig::get('wordfenceCentralConnectEmail');
+			}
 		}
 
 		$result = $wpdb->query('DELETE FROM ' . wfDB::networkTable('wfConfig') . " WHERE name LIKE 'wordfenceCentral%'");
@@ -50,11 +59,6 @@ class wfRESTConfigController extends wfRESTBaseController {
 			'callback'            => array($this, 'disconnect'),
 			'permission_callback' => array($this, 'verifyToken'),
 		));
-		register_rest_route('wordfence/v1', '/premium-connect', array(
-			'methods'             => WP_REST_Server::EDITABLE,
-			'callback'            => array($this, 'premiumConnect'),
-			'permission_callback' => array($this, 'verifyTokenPremium'),
-		));
 	}
 
 	/**
@@ -69,17 +73,35 @@ class wfRESTConfigController extends wfRESTBaseController {
 		$firewall = new wfFirewall();
 		$wafFields = array(
 			'autoPrepend'                    => $firewall->protectionMode() === wfFirewall::PROTECTION_MODE_EXTENDED,
-			'avoid_php_input'                => wfWAF::getInstance()->getStorageEngine()->getConfig('avoid_php_input', false) ? 1 : 0,
-			'disabledRules'                  => array_keys((array) wfWAF::getInstance()->getStorageEngine()->getConfig('disabledRules')),
-			'ruleCount'                      => count((array) wfWAF::getInstance()->getRules()),
-			'disableWAFBlacklistBlocking'    => wfWAF::getInstance()->getStorageEngine()->getConfig('disableWAFBlacklistBlocking'),
-			'enabled'                        => $firewall->wafStatus() !== wfFirewall::FIREWALL_MODE_DISABLED,
-            'firewallMode'                   => $firewall->firewallMode(),
-			'learningModeGracePeriod'        => wfWAF::getInstance()->getStorageEngine()->getConfig('learningModeGracePeriod'),
-			'learningModeGracePeriodEnabled' => wfWAF::getInstance()->getStorageEngine()->getConfig('learningModeGracePeriodEnabled'),
+			'avoid_php_input'                => 0,
+			'disabledRules'                  => array(),
+			'ruleCount'                      => 0,
+			'disableWAFBlacklistBlocking'    => null,
+			'enabled'                        => false,
+			'firewallMode'                   => wfFirewall::FIREWALL_MODE_DISABLED,
+			'learningModeGracePeriod'        => null,
+			'learningModeGracePeriodEnabled' => null,
 			'subdirectoryInstall'            => $firewall->isSubDirectoryInstallation(),
-			'wafStatus'                      => $firewall->wafStatus(),
+			'wafStatus'                      => 0.0,
 		);
+		try {
+			$wafFields = array(
+				'autoPrepend'                    => $firewall->protectionMode() === wfFirewall::PROTECTION_MODE_EXTENDED,
+				'avoid_php_input'                => wfWAF::getInstance()->getStorageEngine()->getConfig('avoid_php_input', false) ? 1 : 0,
+				'disabledRules'                  => array_keys((array) wfWAF::getInstance()->getStorageEngine()->getConfig('disabledRules')),
+				'ruleCount'                      => count((array) wfWAF::getInstance()->getRules()),
+				'disableWAFBlacklistBlocking'    => wfWAF::getInstance()->getStorageEngine()->getConfig('disableWAFBlacklistBlocking'),
+				'enabled'                        => $firewall->firewallMode() !== wfFirewall::FIREWALL_MODE_DISABLED,
+				'firewallMode'                   => $firewall->firewallMode(),
+				'learningModeGracePeriod'        => wfWAF::getInstance()->getStorageEngine()->getConfig('learningModeGracePeriod'),
+				'learningModeGracePeriodEnabled' => wfWAF::getInstance()->getStorageEngine()->getConfig('learningModeGracePeriodEnabled'),
+				'subdirectoryInstall'            => $firewall->isSubDirectoryInstallation(),
+				'wafStatus'                      => $firewall->wafStatus(),
+			);
+		}
+		catch (wfWAFStorageFileException $e) {
+			// Report an unavailable WAF without interrupting Central's configuration sync.
+		}
 		$lsFields = array(
 			Controller_Settings::OPTION_XMLRPC_ENABLED                   => Controller_Settings::shared()->get(Controller_Settings::OPTION_XMLRPC_ENABLED),
 			Controller_Settings::OPTION_2FA_WHITELISTED                  => Controller_Settings::shared()->get(Controller_Settings::OPTION_2FA_WHITELISTED),
@@ -209,22 +231,24 @@ class wfRESTConfigController extends wfRESTBaseController {
 				$errors = Controller_Settings::shared()->validate_multiple($loginSecurityConfig);
 
 				if ($errors !== true) {
+					foreach ($errors as $key => $error) {
+						if (!is_string($error) || $error === '') {
+							$errors[$key] = __('Errors occurred while saving the configuration.', 'wordfence');
+						}
+					}
 					if (count($errors) == 1) {
 						return new WP_Error('rest_set_config_error',
 							sprintf(
 								/* translators: Error message. */
-								__('An error occurred while saving the configuration: %s', 'wordfence'), $errors[0]['error']),
+								__('An error occurred while saving the configuration: %s', 'wordfence'), reset($errors)),
 							array('status' => 422));
 
-					} else if (count($errors) > 1) {
-						$compoundMessage = array();
-						foreach ($errors as $e) {
-							$compoundMessage[] = $e['error'];
-						}
+					}
+					else if (count($errors) > 1) {
 						return new WP_Error('rest_set_config_error',
 							sprintf(
 								/* translators: Error message. */
-								__('Errors occurred while saving the configuration: %s', 'wordfence'), implode(', ', $compoundMessage)),
+								__('Errors occurred while saving the configuration: %s', 'wordfence'), implode(', ', $errors)),
 							array('status' => 422));
 					}
 
@@ -234,7 +258,12 @@ class wfRESTConfigController extends wfRESTBaseController {
 				}
 
 				try {
-					Controller_Settings::shared()->set_multiple($loginSecurityConfig);
+					// Central has no browser session in which to generate a reCAPTCHA token.
+					if (!Controller_Settings::shared()->set_multiple($loginSecurityConfig, false, array(Controller_Settings::VALIDATION_SKIP_RECAPTCHA => true))) {
+						return new WP_Error('rest_set_config_error',
+							__('Errors occurred while saving the configuration.', 'wordfence'),
+							array('status' => 422));
+					}
 					foreach ($fields as $key => $value) {
 						if (strpos($key, 'wfls_settings_') === 0) {
 							unset($fields[$key]);
@@ -301,41 +330,9 @@ class wfRESTConfigController extends wfRESTBaseController {
 	 * @return mixed|WP_REST_Response
 	 */
 	public function disconnect($request) {
-		self::disconnectConfig();
+		self::disconnectConfig(!empty($this->tokenData['adminEmail']) ? $this->tokenData['adminEmail'] : self::WF_CENTRAL_USER_MARKER);
 		return rest_ensure_response(array(
 			'success' => true,
-		));
-	}
-
-	/**
-	 * @param WP_REST_Request $request
-	 * @return mixed|WP_REST_Response
-	 */
-	public function premiumConnect($request) {
-		require_once(WORDFENCE_PATH . '/lib/sodium_compat_fast.php');
-
-		// Store values sent by Central.
-		$wordfenceCentralPK = $request['public-key'];
-		$wordfenceCentralSiteData = $request['site-data'];
-		$wordfenceCentralSiteID = $request['site-id'];
-
-		$keypair = ParagonIE_Sodium_Compat::crypto_sign_keypair();
-		$publicKey = ParagonIE_Sodium_Compat::crypto_sign_publickey($keypair);
-		$secretKey = ParagonIE_Sodium_Compat::crypto_sign_secretkey($keypair);
-		wfConfig::set('wordfenceCentralSecretKey', $secretKey);
-
-		wfConfig::set('wordfenceCentralConnected', 1);
-		wfConfig::set('wordfenceCentralCurrentStep', 6);
-		wfConfig::set('wordfenceCentralPK', pack("H*", $wordfenceCentralPK));
-		wfConfig::set('wordfenceCentralSiteData', json_encode($wordfenceCentralSiteData));
-		wfConfig::set('wordfenceCentralSiteID', $wordfenceCentralSiteID);
-		wfConfig::set('wordfenceCentralConnectTime', time());
-		wfConfig::set('wordfenceCentralConnectEmail', !empty($this->tokenData['adminEmail']) ? $this->tokenData['adminEmail'] : null);
-
-		// Return values created by Wordfence.
-		return rest_ensure_response(array(
-			'success'    => true,
-			'public-key' => ParagonIE_Sodium_Compat::bin2hex($publicKey),
 		));
 	}
 }

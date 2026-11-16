@@ -214,6 +214,7 @@ class wfScan {
 			wfUtils::clearScanLock();
 			$peakMemory = self::logPeakMemory();
 			self::status(2, 'info', sprintf(
+				/* translators: 1. Bytes of memory. 2. Bytes of memory. */
 				__('Wordfence used %1$s of memory for scan. Server peak memory usage was: %2$s', 'wordfence'),
 				wfUtils::formatBytes($peakMemory - self::$peakMemAtStart),
 				wfUtils::formatBytes($peakMemory)
@@ -232,7 +233,7 @@ class wfScan {
 			));
 			self::status(2, 'error', sprintf(/* translators: Error message. */ __("Scan terminated with error: %s", 'wordfence'), $e->getMessage()));
 			
-			$nextScheduledScan = wordfence::getNextScanStartTimestamp();
+			$nextScheduledScan = wfScanner::shared()->nextScheduledScanTime();
 			if ($nextScheduledScan !== false && $nextScheduledScan - time() > 21600 /* 6 hours */) {
 				$nextScheduledScan = time() + 3600;
 				wfScanner::shared()->scheduleSingleScan($nextScheduledScan);

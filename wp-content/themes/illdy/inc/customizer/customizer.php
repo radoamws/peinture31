@@ -6,32 +6,50 @@
 if ( ! function_exists( 'illdy_customize_register' ) ) {
 	function illdy_customize_register( $wp_customize ) {
 
-		// Get Settings
-		$wp_customize->get_setting( 'blogname' )->transport          = 'postMessage';
-		$wp_customize->get_setting( 'blogdescription' )->transport   = 'postMessage';
-		$wp_customize->get_setting( 'header_image' )->transport      = 'postMessage';
-		$wp_customize->get_setting( 'header_image_data' )->transport = 'postMessage';
+		/*
+		 * Core settings/controls can be absent when a child theme or plugin drops the
+		 * matching theme support. Assigning a property on null is a fatal error in
+		 * PHP 8, so resolve each one before touching it.
+		 */
+		// blogname and blogdescription were switched to postMessage too, with no script
+		// or partial to apply them, so the preview never showed a new site title.
+		foreach ( array( 'header_image', 'header_image_data' ) as $illdy_core_setting ) {
+			$illdy_setting = $wp_customize->get_setting( $illdy_core_setting );
+			if ( $illdy_setting ) {
+				$illdy_setting->transport = 'postMessage';
+			}
+		}
 
-		$wp_customize->get_control( 'custom_logo' )->section = 'illdy_general_section';
+		$illdy_logo_control = $wp_customize->get_control( 'custom_logo' );
+		if ( $illdy_logo_control ) {
+			$illdy_logo_control->section = 'illdy_general_section';
+		}
 
 		/**********************************************/
 		/*************** INIT ************************/
 		/**********************************************/
 
 		// Custom Controls
-		require_once get_template_directory() . '/inc/customizer/class-epsilon-control-button.php';
-		require_once get_template_directory() . '/inc/customizer/class-epsilon-control-tab.php';
+		require_once get_template_directory() . '/inc/customizer/controls/class-illdy-control-text-editor.php';
+		require_once get_template_directory() . '/inc/customizer/controls/class-illdy-control-color-scheme.php';
+		require_once get_template_directory() . '/inc/customizer/controls/class-illdy-control-repeater.php';
+		require_once get_template_directory() . '/inc/customizer/controls/class-illdy-control-button.php';
+		require_once get_template_directory() . '/inc/customizer/controls/class-illdy-control-tab.php';
+		require_once get_template_directory() . '/inc/customizer/sections/class-illdy-section-pro.php';
 		require_once get_template_directory() . '/inc/customizer/class-illdy-kaliforms-custom-control.php';
 		require_once get_template_directory() . '/inc/customizer/class-illdy-text-custom-control.php';
-		require_once get_template_directory() . '/inc/customizer/class-epsilon-editor-custom-control.php';
+		// Loaded last so the Illdy_* classes it wraps already exist.
+		require_once get_template_directory() . '/inc/customizer/class-illdy-deprecated.php';
 
-		$wp_customize->register_control_type( 'Epsilon_Control_Tab' );
-		$wp_customize->register_control_type( 'Epsilon_Control_Button' );
+		$wp_customize->register_control_type( 'Illdy_Control_Tab' );
+		$wp_customize->register_control_type( 'Illdy_Control_Button' );
 
 		// Pro Section
 		$wp_customize->add_section(
-			new Epsilon_Section_Pro(
-				$wp_customize, 'illdy-pro-section', array(
+			new Illdy_Section_Pro(
+				$wp_customize,
+				'illdy-pro-section',
+				array(
 					'title'       => esc_html__( 'Illdy', 'illdy' ),
 					'button_text' => esc_html__( 'Documentation', 'illdy' ),
 					'button_url'  => 'https://colorlib.com/wp/support/illdy/',
@@ -42,7 +60,8 @@ if ( ! function_exists( 'illdy_customize_register' ) ) {
 
 		// Front Page sections panel
 		$wp_customize->add_panel(
-			'illdy_frontpage_panel', array(
+			'illdy_frontpage_panel',
+			array(
 				'priority'    => 2,
 				'title'       => esc_html__( 'Front Page Sections', 'illdy' ),
 				'description' => esc_html__( 'Drag & drop to reorder front-page sections', 'illdy' ),
@@ -51,16 +70,19 @@ if ( ! function_exists( 'illdy_customize_register' ) ) {
 
 		// Color Scheme
 		$wp_customize->add_setting(
-			'illdy_color_scheme', array(
+			'illdy_color_scheme',
+			array(
 				'sanitize_callback' => 'esc_html',
 				'default'           => 'default',
 				'transport'         => 'postMessage',
 			)
 		);
 		$wp_customize->add_control(
-			new Epsilon_Control_Color_Scheme(
-				$wp_customize, 'illdy_color_scheme', array(
-					'type'        => 'epsilon-color-scheme',
+			new Illdy_Control_Color_Scheme(
+				$wp_customize,
+				'illdy_color_scheme',
+				array(
+					'type'        => 'illdy-color-scheme',
 					'label'       => esc_html__( 'Color scheme', 'illdy' ),
 					'description' => esc_html__( 'Select a color scheme', 'illdy' ),
 					'choices'     => array(
@@ -71,7 +93,7 @@ if ( ! function_exists( 'illdy_customize_register' ) ) {
 								'epsilon_accent_color'   => '#f1d204',
 								'epsilon_secondary_accent_color' => '#f18b6d',
 								'epsilon_text_color'     => '#545454',
-								'epsilon_contrast_color' => '#8c9597',
+								'epsilon_contrast_color' => '#6b7375',
 								'epsilon_hover_color'    => '#6a4d8a',
 							),
 						),
@@ -82,7 +104,7 @@ if ( ! function_exists( 'illdy_customize_register' ) ) {
 								'epsilon_accent_color'   => '#ff004f',
 								'epsilon_secondary_accent_color' => '#f18b6d',
 								'epsilon_text_color'     => '#545454',
-								'epsilon_contrast_color' => '#8c9597',
+								'epsilon_contrast_color' => '#6b7375',
 								'epsilon_hover_color'    => '#482c54',
 							),
 						),
@@ -93,7 +115,7 @@ if ( ! function_exists( 'illdy_customize_register' ) ) {
 								'epsilon_accent_color'   => '#f66f6d',
 								'epsilon_secondary_accent_color' => '#f18b6d',
 								'epsilon_text_color'     => '#545454',
-								'epsilon_contrast_color' => '#8c9597',
+								'epsilon_contrast_color' => '#6b7375',
 								'epsilon_hover_color'    => '#195962',
 							),
 						),
@@ -104,7 +126,7 @@ if ( ! function_exists( 'illdy_customize_register' ) ) {
 								'epsilon_accent_color'   => '#f79e27',
 								'epsilon_secondary_accent_color' => '#f18b6d',
 								'epsilon_text_color'     => '#545454',
-								'epsilon_contrast_color' => '#8c9597',
+								'epsilon_contrast_color' => '#6b7375',
 								'epsilon_hover_color'    => '#e95e4e',
 							),
 						),
@@ -115,7 +137,7 @@ if ( ! function_exists( 'illdy_customize_register' ) ) {
 								'epsilon_accent_color'   => '#6ebbdc',
 								'epsilon_secondary_accent_color' => '#f18b6d',
 								'epsilon_text_color'     => '#545454',
-								'epsilon_contrast_color' => '#8c9597',
+								'epsilon_contrast_color' => '#6b7375',
 								'epsilon_hover_color'    => '#2e3d51',
 							),
 						),
@@ -126,7 +148,7 @@ if ( ! function_exists( 'illdy_customize_register' ) ) {
 								'epsilon_accent_color'   => '#507fe2',
 								'epsilon_secondary_accent_color' => '#f18b6d',
 								'epsilon_text_color'     => '#545454',
-								'epsilon_contrast_color' => '#8c9597',
+								'epsilon_contrast_color' => '#6b7375',
 								'epsilon_hover_color'    => '#1acdcb',
 							),
 						),
@@ -173,10 +195,53 @@ if ( ! function_exists( 'illdy_customize_register' ) ) {
 
 		// Full Width
 		require_once get_template_directory() . '/inc/customizer/panels/full-width.php';
+
+		/*
+		 * These were postMessage settings, but the preview script either had no
+		 * handler for them or could only change markup that was already on the page:
+		 * a section that was hidden, a social link or address line that was empty,
+		 * or a script that is only enqueued when the option is on. Changing them
+		 * showed nothing until a reload, so they refresh the preview instead.
+		 */
+		$illdy_refresh = array(
+			'illdy_jumbotron_enable_parallax_effect',
+			'illdy_projects_lightbox',
+			'illdy_full_width_padding',
+			'illdy_full_width_general_title',
+			'illdy_full_width_general_entry',
+			'illdy_email',
+			'illdy_phone',
+			'illdy_address1',
+			'illdy_address2',
+		);
+
+		foreach ( array( 'facebook', 'twitter', 'linkedin', 'pinterest', 'instagram', 'youtube', 'vimeo' ) as $illdy_network ) {
+			$illdy_refresh[] = 'illdy_contact_bar_' . $illdy_network . '_url';
+		}
+
+		foreach ( illdy_sections_visibility_settings() as $illdy_show_setting ) {
+			$illdy_refresh[] = $illdy_show_setting;
+		}
+
+		foreach ( $illdy_refresh as $illdy_setting_id ) {
+			$illdy_setting = $wp_customize->get_setting( $illdy_setting_id );
+			if ( $illdy_setting ) {
+				$illdy_setting->transport = 'refresh';
+			}
+		}
 	}
 
-	add_action( 'customize_register', 'illdy_customize_register' );
-}// End if().
+	/*
+	 * Priority 11, not the default 10. This originally existed to run after the Epsilon
+	 * framework's own customize_register callback, which loaded the control classes the
+	 * panels instantiate. That framework is gone and the theme now requires its controls
+	 * directly, but the priority stays: Illdy Companion registers its widgets' controls
+	 * at priority 20 and expects the theme's panels to already exist, and third-party
+	 * code hooking at the default 10 keeps running before the panels are built rather
+	 * than in the middle of them.
+	 */
+	add_action( 'customize_register', 'illdy_customize_register', 11 );
+}
 
 /**
  *  Customizer Live Preview
@@ -190,19 +255,20 @@ if ( ! function_exists( 'illdy_customizer_live_preview' ) ) {
 		wp_enqueue_script( 'illdy-customizer-live-preview', get_template_directory_uri() . '/inc/customizer/assets/js/illdy-customizer-live-preview.js', array( 'customize-preview' ), '1.0', true );
 
 		wp_localize_script(
-			'illdy-customizer-live-preview', 'WPUrls', array(
+			'illdy-customizer-live-preview',
+			'WPUrls',
+			array(
 				'siteurl' => get_option( 'siteurl' ),
 				'theme'   => get_template_directory_uri(),
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			)
 		);
-
 	}
 }
 
 if ( ! function_exists( 'illdy_customizer_css_load' ) ) {
 	function illdy_customizer_css_load() {
-		wp_enqueue_style( 'illdy-customizer-css', get_template_directory_uri() . '/inc/customizer/assets/css/illdy-customizer.css' );
+		wp_enqueue_style( 'illdy-customizer-css', get_template_directory_uri() . '/inc/customizer/assets/css/illdy-customizer.css', array(), ILLDY_VERSION );
 	}
 
 	add_action( 'customize_controls_print_styles', 'illdy_customizer_css_load' );
@@ -214,7 +280,9 @@ if ( ! function_exists( 'illdy_customizer_js_load' ) ) {
 		wp_enqueue_script( 'plugin-install' );
 		wp_enqueue_script( 'updates' );
 		wp_localize_script(
-			'updates', '_wpUpdatesItemCounts', array(
+			'updates',
+			'_wpUpdatesItemCounts',
+			array(
 				'totals' => wp_get_update_data(),
 			)
 		);
@@ -225,10 +293,12 @@ if ( ! function_exists( 'illdy_customizer_js_load' ) ) {
 		$illdy_customizer['sections']           = illdy_get_sections_position();
 		$illdy_customizer['ajax_url']           = admin_url( 'admin-ajax.php' );
 		$illdy_customizer['template_directory'] = get_template_directory_uri();
-		$illdy_customizer['site_url']           = site_url();
+		// The 404 preview is a front-end URL: home_url(), not site_url(), which
+		// differs when WordPress lives in a subdirectory.
+		$illdy_customizer['home_url']    = home_url( '/' );
+		$illdy_customizer['order_nonce'] = wp_create_nonce( 'illdy_order_sections' );
 
 		wp_localize_script( 'illdy-customizer', 'IlldyCustomizer', $illdy_customizer );
-
 	}
 
 	add_action( 'customize_controls_enqueue_scripts', 'illdy_customizer_js_load', 99 );
@@ -257,19 +327,26 @@ if ( ! function_exists( 'illdy_sanitize_radio_buttons' ) ) {
 if ( ! function_exists( 'illdy_customizer_css' ) ) {
 	add_action( 'wp_head', 'illdy_customizer_css' );
 	function illdy_customizer_css() {
-		$preloader_primary_color    = esc_attr( get_theme_mod( 'illdy_preloader_primary_color', '#f1d204' ) );
-		$preloader_secondly_color   = esc_attr( get_theme_mod( 'illdy_preloader_secondly_color', '#ffffff' ) );
-		$preloader_background_color = esc_attr( get_theme_mod( 'illdy_preloader_background_color', '#ffffff' ) );
+		/*
+		 * These land inside a CSS declaration, where esc_attr() is the wrong tool: it
+		 * permits ";" and "}", so a stored value could close the rule and append
+		 * arbitrary CSS. sanitize_hex_color() constrains them to a colour literal.
+		 */
+		$preloader_primary_color    = sanitize_hex_color( get_theme_mod( 'illdy_preloader_primary_color', '#f1d204' ) );
+		$preloader_secondly_color   = sanitize_hex_color( get_theme_mod( 'illdy_preloader_secondly_color', '#ffffff' ) );
+		$preloader_background_color = sanitize_hex_color( get_theme_mod( 'illdy_preloader_background_color', '#ffffff' ) );
 
 		$output = '';
 
-		$output .= '<style type="text/css">';
 		$output .= ( $preloader_primary_color ? '.pace .pace-progress {background-color: ' . $preloader_primary_color . '; color: ' . $preloader_primary_color . ';}' : '' );
 		$output .= ( $preloader_primary_color || $preloader_secondly_color ? '.pace .pace-activity {box-shadow: inset 0 0 0 2px ' . $preloader_primary_color . ', inset 0 0 0 7px ' . $preloader_secondly_color . ';}' : '' );
 		$output .= ( $preloader_background_color ? '.pace-overlay {background-color: ' . $preloader_background_color . ';}' : '' );
-		$output .= '</style>';
 
-		echo $output;
+		if ( '' === $output ) {
+			return;
+		}
+
+		echo '<style id="illdy-preloader-css">' . $output . '</style>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- values constrained to hex colours above.
 	}
 }
 
@@ -282,7 +359,7 @@ if ( ! function_exists( 'illdy_sanitize_checkbox' ) ) {
 	 * @return int
 	 */
 	function illdy_sanitize_checkbox( $value ) {
-		if ( 1 == $value ) {
+		if ( 1 === (int) $value ) {
 			return 1;
 		} else {
 			return 0;
@@ -295,7 +372,9 @@ if ( ! function_exists( 'illdy_sanitize_checkbox' ) ) {
  */
 if ( ! function_exists( 'illdy_is_not_active_kali_forms' ) ) {
 	function illdy_is_not_active_kali_forms() {
-		if ( ! defined( 'KALIFORMS_VERSION7' ) ) {
+		// Kali Forms defines KALIFORMS_VERSION. This checked KALIFORMS_VERSION7, which
+		// nothing defines, so the form picker was hidden even with Kali Forms active.
+		if ( ! defined( 'KALIFORMS_VERSION' ) ) {
 			return true;
 		} else {
 			return false;
@@ -308,21 +387,20 @@ if ( ! function_exists( 'illdy_is_not_active_kali_forms' ) ) {
  */
 if ( ! function_exists( 'illdy_have_not_kali_forms' ) ) {
 	function illdy_have_not_kali_forms() {
-		if ( defined( 'KALIFORMS_VERSION7' ) ) {
-			$args  = array(
-				'post_type'      => 'kaliforms_forms',
-				'post_status'    => 'publish',
-				'posts_per_page' => -1,
-			);
-			$posts = get_posts( $args );
-			if ( count( $posts ) > 0 ) {
-				return false;
-			} else {
-				return true;
-			}
-		} else {
+		if ( ! defined( 'KALIFORMS_VERSION' ) ) {
 			return false;
 		}
+
+		$forms = get_posts(
+			array(
+				'post_type'      => 'kaliforms_forms',
+				'post_status'    => 'publish',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+			)
+		);
+
+		return empty( $forms );
 	}
 }
 
@@ -404,92 +482,139 @@ function illdy_is_sticky_header() {
 	return false;
 }
 
+if ( ! function_exists( 'illdy_sanitize_slides' ) ) {
+	/**
+	 * Sanitizes the jumbotron slides repeater.
+	 *
+	 * Accepts either the array the control posts or a JSON string, and always returns
+	 * the shape the front end reads: a list of arrays each holding a slide_image URL.
+	 *
+	 * @param mixed $value Raw setting value.
+	 *
+	 * @return array
+	 */
+	function illdy_sanitize_slides( $value ) {
+		if ( is_string( $value ) ) {
+			$decoded = json_decode( $value, true );
+			$value   = ( null === $decoded ) ? array() : $decoded;
+		}
+
+		$clean = array();
+
+		foreach ( (array) $value as $row ) {
+			$row = (array) $row;
+
+			if ( empty( $row['slide_image'] ) ) {
+				continue;
+			}
+
+			$clean[] = array( 'slide_image' => esc_url_raw( $row['slide_image'] ) );
+		}
+
+		return $clean;
+	}
+}
+
 /**
  *  Sanitize Select
  */
 if ( ! function_exists( 'illdy_sanitize_select' ) ) {
 	function illdy_sanitize_select( $input ) {
-		if ( is_numeric( $input ) ) {
-			return intval( $input );
-		}
+		// Previously fell through and returned null for any non-numeric input, which
+		// stored a null theme mod. Constrain to the two registered choices instead.
+		$input = is_numeric( $input ) ? intval( $input ) : 0;
+
+		return in_array( $input, array( 1, 2 ), true ) ? $input : 1;
 	}
 }
 
 if ( ! function_exists( 'illdy_about_general_title' ) ) {
 	function illdy_about_general_title() {
-		return get_theme_mode( 'illdy_about_general_title' );
+		return get_theme_mod( 'illdy_about_general_title' );
 	}
 }
 
 if ( ! function_exists( 'illdy_about_general_entry' ) ) {
 	function illdy_about_general_entry() {
-		return get_theme_mode( 'illdy_about_general_entry' );
+		return get_theme_mod( 'illdy_about_general_entry' );
 	}
 }
 
 if ( ! function_exists( 'illdy_contact_us_general_title' ) ) {
 	function illdy_contact_us_general_title() {
-		return get_theme_mode( 'illdy_contact_us_general_title' );
+		return get_theme_mod( 'illdy_contact_us_general_title' );
 	}
 }
 
 if ( ! function_exists( 'illdy_contact_us_general_text' ) ) {
 	function illdy_contact_us_general_text() {
-		return get_theme_mode( 'illdy_contact_us_general_text' );
+		return get_theme_mod( 'illdy_contact_us_general_text' );
 	}
 }
 
 if ( ! function_exists( 'illdy_contact_us_general_address_title' ) ) {
 	function illdy_contact_us_general_address_title() {
-		return get_theme_mode( 'illdy_contact_us_general_address_title' );
+		return get_theme_mod( 'illdy_contact_us_general_address_title' );
 	}
 }
 
 if ( ! function_exists( 'illdy_contact_us_general_customer_support_title' ) ) {
 	function illdy_contact_us_general_customer_support_title() {
-		return get_theme_mode( 'illdy_contact_us_general_customer_support_title' );
+		return get_theme_mod( 'illdy_contact_us_general_customer_support_title' );
 	}
 }
 
 if ( ! function_exists( 'illdy_address2' ) ) {
 	function illdy_address2() {
-		return get_theme_mode( 'illdy_address2' );
+		return get_theme_mod( 'illdy_address2' );
 	}
 }
 
 if ( ! function_exists( 'illdy_address1' ) ) {
 	function illdy_address1() {
-		return get_theme_mode( 'illdy_address1' );
+		return get_theme_mod( 'illdy_address1' );
 	}
 }
 
 if ( ! function_exists( 'illdy_phone' ) ) {
 	function illdy_phone() {
-		return get_theme_mode( 'illdy_phone' );
+		return get_theme_mod( 'illdy_phone' );
 	}
 }
 
 if ( ! function_exists( 'illdy_email' ) ) {
 	function illdy_email() {
-		return get_theme_mode( 'illdy_email' );
+		return get_theme_mod( 'illdy_email' );
 	}
 }
 
 if ( ! function_exists( 'illdy_footer_copyright' ) ) {
 	function illdy_footer_copyright() {
-		return get_theme_mode( 'illdy_footer_copyright' );
+		return illdy_replace_year( get_theme_mod( 'illdy_footer_copyright' ) );
+	}
+}
+
+if ( ! function_exists( 'illdy_replace_year' ) ) {
+	/**
+	 * Replace the {year} placeholder with the current year, so a saved copyright line never goes stale.
+	 *
+	 * @param string $text Text that may contain {year}.
+	 * @return string
+	 */
+	function illdy_replace_year( $text ) {
+		return str_replace( '{year}', wp_date( 'Y' ), (string) $text );
 	}
 }
 
 if ( ! function_exists( 'illdy_jumbotron_general_first_row_from_title' ) ) {
 	function illdy_jumbotron_general_first_row_from_title() {
-		return get_theme_mode( 'illdy_jumbotron_general_first_row_from_title' );
+		return get_theme_mod( 'illdy_jumbotron_general_first_row_from_title' );
 	}
 }
 
 if ( ! function_exists( 'illdy_jumbotron_general_second_row_from_title' ) ) {
 	function illdy_jumbotron_general_second_row_from_title() {
-		return get_theme_mode( 'illdy_jumbotron_general_second_row_from_title' );
+		return get_theme_mod( 'illdy_jumbotron_general_second_row_from_title' );
 	}
 }
 
@@ -510,9 +635,15 @@ if ( ! function_exists( 'illdy_img_footer_logo' ) ) {
 if ( ! function_exists( 'illdy_custom_logo' ) ) {
 	function illdy_custom_logo() {
 		$logo_id    = get_theme_mod( 'custom_logo' );
-		$logo_image = wp_get_attachment_image_src( $logo_id, 'full' );
+		$logo_image = $logo_id ? wp_get_attachment_image_src( $logo_id, 'full' ) : false;
 
-		return '<img src="' . esc_url( $logo_image[0] ) . '" />';
+		// wp_get_attachment_image_src() returns false when the attachment is gone;
+		// indexing that produced a PHP notice and an <img src="">.
+		if ( empty( $logo_image[0] ) ) {
+			return '';
+		}
+
+		return '<img src="' . esc_url( $logo_image[0] ) . '" alt="' . esc_attr( get_bloginfo( 'name' ) ) . '" />';
 	}
 }
 if ( ! function_exists( 'illdy_contact_us_social' ) ) {
@@ -521,7 +652,6 @@ if ( ! function_exists( 'illdy_contact_us_social' ) ) {
 		$contact_bar_facebook_url  = get_theme_mod( 'illdy_contact_bar_facebook_url' );
 		$contact_bar_twitter_url   = get_theme_mod( 'illdy_contact_bar_twitter_url' );
 		$contact_bar_linkedin_url  = get_theme_mod( 'illdy_contact_bar_linkedin_url' );
-		$contact_bar_googlep_url   = get_theme_mod( 'illdy_contact_bar_googlep_url' );
 		$contact_bar_youtube_url   = get_theme_mod( 'illdy_contact_bar_youtube_url' );
 		$contact_bar_vimeo_url     = get_theme_mod( 'illdy_contact_bar_vimeo_url' );
 		$contact_bar_pinterest_url = get_theme_mod( 'illdy_contact_bar_pinterest_url' );
@@ -529,51 +659,91 @@ if ( ! function_exists( 'illdy_contact_us_social' ) ) {
 
 		$html = '';
 		if ( $contact_bar_twitter_url ) :
-			$html .= '<a href="' . esc_url( $contact_bar_twitter_url ) . '" title="' . __( 'Twitter', 'illdy' ) . '" target="_blank"><i class="fa fa-twitter"></i></a>';
+			$html .= '<a href="' . esc_url( $contact_bar_twitter_url ) . '" title="' . __( 'Twitter', 'illdy' ) . '" target="_blank"><i class="fa-brands fa-twitter"></i></a>';
 		endif;
 		if ( $contact_bar_facebook_url ) :
-			$html .= '<a href="' . esc_url( $contact_bar_facebook_url ) . '" title="' . __( 'Facebook', 'illdy' ) . '" target="_blank"><i class="fa fa-facebook"></i></a>';
+			$html .= '<a href="' . esc_url( $contact_bar_facebook_url ) . '" title="' . __( 'Facebook', 'illdy' ) . '" target="_blank"><i class="fa-brands fa-facebook"></i></a>';
 		endif;
 		if ( $contact_bar_linkedin_url ) :
-			$html .= '<a href="' . esc_url( $contact_bar_linkedin_url ) . '" title="' . __( 'LinkedIn', 'illdy' ) . '" target="_blank"><i class="fa fa-linkedin"></i></a>';
-		endif;
-		if ( $contact_bar_googlep_url ) :
-			$html .= '<a href="' . esc_url( $contact_bar_googlep_url ) . '" title="' . __( 'Google+', 'illdy' ) . '" target="_blank"><i class="fa fa-google-plus"></i></a>';
+			$html .= '<a href="' . esc_url( $contact_bar_linkedin_url ) . '" title="' . __( 'LinkedIn', 'illdy' ) . '" target="_blank"><i class="fa-brands fa-linkedin"></i></a>';
 		endif;
 		if ( $contact_bar_pinterest_url ) :
-			$html .= '<a href="' . esc_url( $contact_bar_pinterest_url ) . '" title="' . __( 'Pinterest', 'illdy' ) . '" target="_blank"><i class="fa fa-pinterest"></i></a>';
+			$html .= '<a href="' . esc_url( $contact_bar_pinterest_url ) . '" title="' . __( 'Pinterest', 'illdy' ) . '" target="_blank"><i class="fa-brands fa-pinterest"></i></a>';
 		endif;
 		if ( $contact_bar_instagram_url ) :
-			$html .= '<a href="' . esc_url( $contact_bar_instagram_url ) . '" title="' . __( 'Instagram', 'illdy' ) . '" target="_blank"><i class="fa fa-instagram"></i></a>';
+			$html .= '<a href="' . esc_url( $contact_bar_instagram_url ) . '" title="' . __( 'Instagram', 'illdy' ) . '" target="_blank"><i class="fa-brands fa-instagram"></i></a>';
 		endif;
 		if ( $contact_bar_youtube_url ) :
-			$html .= '<a href="' . esc_url( $contact_bar_youtube_url ) . '" title="' . __( 'YouTube', 'illdy' ) . '" target="_blank"><i class="fa fa-youtube"></i></a>';
+			$html .= '<a href="' . esc_url( $contact_bar_youtube_url ) . '" title="' . __( 'YouTube', 'illdy' ) . '" target="_blank"><i class="fa-brands fa-youtube"></i></a>';
 		endif;
 		if ( $contact_bar_vimeo_url ) :
-			$html .= '<a href="' . esc_url( $contact_bar_vimeo_url ) . '" title="' . __( 'Vimeo', 'illdy' ) . '" target="_blank"><i class="fa fa-vimeo"></i></a>';
+			$html .= '<a href="' . esc_url( $contact_bar_vimeo_url ) . '" title="' . __( 'Vimeo', 'illdy' ) . '" target="_blank"><i class="fa-brands fa-vimeo"></i></a>';
 		endif;
 
 		return $html;
 	}
-}// End if().
+}
 
 add_action( 'wp_ajax_illdy_order_sections', 'illdy_order_sections' );
 
+/**
+ * Persists the front-page section order.
+ *
+ * Reordering rewrites a theme mod, so it requires the same authority the Customizer
+ * itself does. This endpoint previously ran for any authenticated user, verified no
+ * nonce, and wrote raw $_POST data into the option.
+ */
 function illdy_order_sections() {
 
-	if ( isset( $_POST['sections'] ) ) {
-
-		set_theme_mod( 'illdy_frontpage_sections', $_POST['sections'] );
-		echo 'succes';
-
+	if ( ! current_user_can( 'edit_theme_options' ) ) {
+		wp_send_json_error( 'forbidden', 403 );
 	}
 
-	wp_die(); // this is required to terminate immediately and return a proper response
+	check_ajax_referer( 'illdy_order_sections', 'nonce' );
+
+	$submitted = isset( $_POST['sections'] ) ? wp_unslash( $_POST['sections'] ) : array();
+
+	if ( ! is_array( $submitted ) ) {
+		wp_send_json_error( 'invalid', 400 );
+	}
+
+	$allowed = illdy_get_default_sections();
+	$clean   = array();
+
+	foreach ( $submitted as $section ) {
+		if ( ! is_string( $section ) ) {
+			continue;
+		}
+
+		$section = sanitize_text_field( $section );
+
+		if ( in_array( $section, $allowed, true ) && ! in_array( $section, $clean, true ) ) {
+			$clean[] = $section;
+		}
+	}
+
+	// A short or partial payload must never drop sections off the front page.
+	foreach ( $allowed as $section ) {
+		if ( ! in_array( $section, $clean, true ) ) {
+			$clean[] = $section;
+		}
+	}
+
+	set_theme_mod( 'illdy_frontpage_sections', $clean );
+
+	wp_send_json_success();
 }
 
-if ( ! function_exists( 'illdy_get_sections_position' ) ) {
-	function illdy_get_sections_position() {
-		$defaults = array(
+if ( ! function_exists( 'illdy_get_default_sections' ) ) {
+	/**
+	 * The canonical set of front-page section ids, in their shipped order.
+	 *
+	 * Doubles as the allowlist for anything that writes the stored order.
+	 *
+	 * @return string[]
+	 */
+	function illdy_get_default_sections() {
+		return array(
 			'illdy_panel_about',
 			'illdy_panel_projects',
 			'illdy_testimonials_general',
@@ -584,15 +754,41 @@ if ( ! function_exists( 'illdy_get_sections_position' ) ) {
 			'illdy_contact_us',
 			'illdy_full_width',
 		);
+	}
+}
+
+if ( ! function_exists( 'illdy_get_sections_position' ) ) {
+	function illdy_get_sections_position() {
+		$defaults = illdy_get_default_sections();
 		$sections = get_theme_mod( 'illdy_frontpage_sections', $defaults );
-		return $sections;
+
+		if ( ! is_array( $sections ) ) {
+			return $defaults;
+		}
+
+		// Reconcile against the allowlist so a stale or tampered value cannot drop,
+		// duplicate or invent a section.
+		$clean = array();
+		foreach ( $sections as $section ) {
+			if ( is_string( $section ) && in_array( $section, $defaults, true ) && ! in_array( $section, $clean, true ) ) {
+				$clean[] = $section;
+			}
+		}
+
+		foreach ( $defaults as $section ) {
+			if ( ! in_array( $section, $clean, true ) ) {
+				$clean[] = $section;
+			}
+		}
+
+		return $clean;
 	}
 }
 
 if ( ! function_exists( 'illdy_get_section_position' ) ) {
 	function illdy_get_section_position( $key ) {
 		$sections = illdy_get_sections_position();
-		$position = array_search( $key, $sections );
+		$position = array_search( $key, $sections, true );
 		$return   = ( $position + 1 ) * 10;
 		return $return;
 	}
@@ -601,7 +797,7 @@ if ( ! function_exists( 'illdy_get_section_position' ) ) {
 if ( ! function_exists( 'illdy_is_jumbotron_image' ) ) {
 	function illdy_is_jumbotron_image() {
 		$jumbotron_type = get_theme_mod( 'illdy_jumbotron_background_type', 'image' );
-		if ( 'image' == $jumbotron_type ) {
+		if ( 'image' === $jumbotron_type ) {
 			return true;
 		}
 		return false;
@@ -611,7 +807,7 @@ if ( ! function_exists( 'illdy_is_jumbotron_image' ) ) {
 if ( ! function_exists( 'illdy_is_jumbotron_video' ) ) {
 	function illdy_is_jumbotron_video() {
 		$jumbotron_type = get_theme_mod( 'illdy_jumbotron_background_type', 'image' );
-		if ( 'video' == $jumbotron_type ) {
+		if ( 'video' === $jumbotron_type ) {
 			return true;
 		}
 		return false;
@@ -621,7 +817,7 @@ if ( ! function_exists( 'illdy_is_jumbotron_video' ) ) {
 if ( ! function_exists( 'illdy_is_jumbotron_slider' ) ) {
 	function illdy_is_jumbotron_slider() {
 		$jumbotron_type = get_theme_mod( 'illdy_jumbotron_background_type', 'image' );
-		if ( 'slider' == $jumbotron_type ) {
+		if ( 'slider' === $jumbotron_type ) {
 			return true;
 		}
 		return false;
@@ -632,7 +828,7 @@ if ( ! function_exists( 'illdy_is_jumbotron_slider_autoplay' ) ) {
 	function illdy_is_jumbotron_slider_autoplay() {
 		$jumbotron_type = get_theme_mod( 'illdy_jumbotron_background_type', 'image' );
 		$autoplay       = get_theme_mod( 'illdy_jumbotron_slider_autoplay', true );
-		if ( 'slider' != $jumbotron_type ) {
+		if ( 'slider' !== $jumbotron_type ) {
 			return false;
 		}
 
@@ -645,14 +841,14 @@ if ( ! function_exists( 'illdy_is_jumbotron_slider_autoplay' ) ) {
 }
 
 
-function illdy_sanitize_background_repeat( $value, $setting ) {
-	if ( ! in_array( $value, array( 'repeat-x', 'repeat-y', 'repeat', 'no-repeat' ) ) ) {
+function illdy_sanitize_background_repeat( $value ) {
+	if ( ! in_array( $value, array( 'repeat-x', 'repeat-y', 'repeat', 'no-repeat' ), true ) ) {
 		return new WP_Error( 'invalid_value', __( 'Invalid value for background repeat.', 'illdy' ) );
 	}
 	return $value;
 }
 
-function illdy_sanitize_background_preset( $value, $setting ) {
+function illdy_sanitize_background_preset( $value ) {
 	if ( ! in_array( $value, array( 'default', 'fill', 'fit', 'repeat', 'custom' ), true ) ) {
 		return new WP_Error( 'invalid_value', __( 'Invalid value for background size.', 'illdy' ) );
 	}
@@ -660,7 +856,7 @@ function illdy_sanitize_background_preset( $value, $setting ) {
 	return $value;
 }
 
-function illdy_sanitize_background_size( $value, $setting ) {
+function illdy_sanitize_background_size( $value ) {
 	if ( ! in_array( $value, array( 'auto', 'contain', 'cover' ), true ) ) {
 		return new WP_Error( 'invalid_value', __( 'Invalid value for background size.', 'illdy' ) );
 	}
@@ -690,9 +886,9 @@ function illdy_print_customizer_templates() {
 		{{#if illdy_jumbotron_background_position_x }}
 			#header{ background-position-x: {{illdy_jumbotron_background_position_x}} !important; }
 		{{/if}}
-		{{#if illdy_jumbotron_background_attachment }}
+		{{#unless illdy_jumbotron_background_attachment }}
 			#header{ background-attachment: scroll !important; }
-		{{/if}}
+		{{/unless}}
 		{{#if illdy_jumbotron_background_repeat }}
 			#header{ background-repeat: repeat !important; }
 		{{/if}}
@@ -744,9 +940,9 @@ function illdy_print_customizer_templates() {
 		{{#if illdy_latest_news_background_position_x }}
 			#latest-news{ background-position-x: {{illdy_latest_news_background_position_x}} !important; }
 		{{/if}}
-		{{#if illdy_latest_news_background_attachment }}
+		{{#unless illdy_latest_news_background_attachment }}
 			#latest-news{ background-attachment: scroll !important; }
-		{{/if}}
+		{{/unless}}
 		{{#if illdy_latest_news_background_repeat }}
 			#latest-news{ background-repeat: repeat !important; }
 		{{/if}}
@@ -795,15 +991,15 @@ function illdy_print_customizer_templates() {
 		{{#if illdy_full_width_general_image }}
 			#full-width:before { background-image: url({{illdy_full_width_general_image}}) !important; }
 		{{/if}}
-		{{#if illdy_full-width_background_position_y }}
-			#full-width:before { background-position-y: {{illdy_full-width_background_position_y}} !important; }
+		{{#if illdy_full_width_background_position_y }}
+			#full-width:before { background-position-y: {{illdy_full_width_background_position_y}} !important; }
 		{{/if}}
-		{{#if illdy_full-width_background_position_x }}
-			#full-width:before { background-position-x: {{illdy_full-width_background_position_x}} !important; }
+		{{#if illdy_full_width_background_position_x }}
+			#full-width:before { background-position-x: {{illdy_full_width_background_position_x}} !important; }
 		{{/if}}
-		{{#if illdy_full_width_background_attachment }}
+		{{#unless illdy_full_width_background_attachment }}
 			#full-width:before { background-attachment: scroll !important; }
-		{{/if}}
+		{{/unless}}
 		{{#if illdy_full_width_background_repeat }}
 			#full-width:before { background-repeat: repeat !important; }
 		{{/if}}
@@ -819,7 +1015,7 @@ function illdy_print_customizer_templates() {
 		{{#if  illdy_full_width_descriptions_color }}
 			#full-width .section-header .section-description { color: {{illdy_full_width_descriptions_color}}; }
 		{{/if}}
-		{{#if  illdy_full_width_descriptions_color }}
+		{{#if  illdy_full_width_full_text }}
 			#full-width .top-parallax-section h1, #full-width .top-parallax-section p { color: {{illdy_full_width_full_text}}; }
 		{{/if}}
 	</script>
@@ -834,9 +1030,9 @@ function illdy_print_customizer_templates() {
 		{{#if illdy_about_background_position_x }}
 			#about:before { background-position-x: {{illdy_about_background_position_x}} !important; }
 		{{/if}}
-		{{#if illdy_about_background_attachment }}
+		{{#unless illdy_about_background_attachment }}
 			#about:before { background-attachment: scroll !important; }
-		{{/if}}
+		{{/unless}}
 		{{#if illdy_about_background_repeat }}
 			#about:before { background-repeat: repeat !important; }
 		{{/if}}
@@ -864,9 +1060,9 @@ function illdy_print_customizer_templates() {
 		{{#if illdy_projects_background_position_x }}
 			#projects:before { background-position-x: {{illdy_projects_background_position_x}} !important; }
 		{{/if}}
-		{{#if illdy_projects_background_attachment }}
+		{{#unless illdy_projects_background_attachment }}
 			#projects:before { background-attachment: scroll !important; }
-		{{/if}}
+		{{/unless}}
 		{{#if illdy_projects_background_repeat }}
 			#projects:before { background-repeat: repeat !important; }
 		{{/if}}
@@ -894,9 +1090,9 @@ function illdy_print_customizer_templates() {
 		{{#if illdy_services_background_position_x }}
 			#services:before { background-position-x: {{illdy_services_background_position_x}} !important; }
 		{{/if}}
-		{{#if illdy_services_background_attachment }}
+		{{#unless illdy_services_background_attachment }}
 			#services:before { background-attachment: scroll !important; }
-		{{/if}}
+		{{/unless}}
 		{{#if illdy_services_background_repeat }}
 			#services:before { background-repeat: repeat !important; }
 		{{/if}}
@@ -924,9 +1120,9 @@ function illdy_print_customizer_templates() {
 		{{#if illdy_team_background_position_x }}
 			#team:before { background-position-x: {{illdy_team_background_position_x}} !important; }
 		{{/if}}
-		{{#if illdy_team_background_attachment }}
+		{{#unless illdy_team_background_attachment }}
 			#team:before { background-attachment: scroll !important; }
-		{{/if}}
+		{{/unless}}
 		{{#if illdy_team_background_repeat }}
 			#team:before { background-repeat: repeat !important; }
 		{{/if}}
@@ -954,9 +1150,9 @@ function illdy_print_customizer_templates() {
 		{{#if illdy_testimonials_background_position_x }}
 			#testimonials:before { background-position-x: {{illdy_testimonials_background_position_x}} !important; }
 		{{/if}}
-		{{#if illdy_testimonials_background_attachment }}
+		{{#unless illdy_testimonials_background_attachment }}
 			#testimonials:before { background-attachment: scroll !important; }
-		{{/if}}
+		{{/unless}}
 		{{#if illdy_testimonials_background_repeat }}
 			#testimonials:before { background-repeat: repeat !important; }
 		{{/if}}
@@ -986,5 +1182,4 @@ function illdy_print_customizer_templates() {
 	</script>
 
 	<?php
-
 }

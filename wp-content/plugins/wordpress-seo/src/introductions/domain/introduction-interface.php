@@ -8,11 +8,11 @@ namespace Yoast\WP\SEO\Introductions\Domain;
 interface Introduction_Interface {
 
 	/**
-	 * Returns the unique name.
+	 * Returns the ID.
 	 *
 	 * @return string
 	 */
-	public function get_name();
+	public function get_id();
 
 	/**
 	 * Returns the requested pagination priority. Lower means earlier.

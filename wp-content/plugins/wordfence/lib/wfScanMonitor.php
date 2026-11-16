@@ -73,9 +73,9 @@ class wfScanMonitor {
 			if ($lastAttempt === null || $now - $lastAttempt < self::SCAN_START_TIMEOUT)
 				return;
 			$lastSuccess = wfConfig::get(self::CONFIG_LAST_SUCCESS);
+			self::setRemainingResumeAttempts(--$remainingAttempts);
 			if ($lastSuccess === null || $lastAttempt > $lastSuccess) {
-				self::setRemainingResumeAttempts(--$remainingAttempts);
-				wordfence::status(2, 'info', sprintf(__('Attempting to resume scan stage (%d attempt(s) remaining)...', 'wordfence'), $remainingAttempts));
+				wordfence::status(2, 'info', sprintf(/* translators: remaining attempts */ __('Attempting to resume scan stage (%d attempt(s) remaining)...', 'wordfence'), $remainingAttempts));
 				self::resumeScan();
 			}
 		}
@@ -120,8 +120,8 @@ class wfScanMonitor {
 	}
 
 	public static function registerActions() {
-		add_filter('cron_schedules', array(get_class(), 'registerCronInterval'));
-		add_action(self::CRON_HOOK, array(get_class(), 'monitorScan'));
+		add_filter('cron_schedules', array(self::class, 'registerCronInterval'));
+		add_action(self::CRON_HOOK, array(self::class, 'monitorScan'));
 	}
 
 	public static function handleDeactivation() {

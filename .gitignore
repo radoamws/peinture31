@@ -1,2 +1,4 @@
 wp-config.php
 _backup/
+wp-content/wflogs/
+wp-content/upgrade/

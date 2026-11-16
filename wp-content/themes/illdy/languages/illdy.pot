@@ -1,0 +1,1976 @@
+# Copyright (C) 2026 Colorlib
+# This file is distributed under the GNU General Public License v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Illdy 2.4.0\n"
+"Report-Msgid-Bugs-To: https://www.colorlib.com/\n"
+"Last-Translator: Colorlib <office@colorlib.com>\n"
+"Language-Team: Colorlib <office@colorlib.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-10-02T10:50:17+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: illdy\n"
+
+#. Theme Name of the theme
+#: style.css
+#: footer.php:83
+#: header.php:13
+#: inc/customizer/customizer.php:53
+#: inc/customizer/panels/general-options.php:259
+msgid "Illdy"
+msgstr ""
+
+#. Theme URI of the theme
+#: style.css
+msgid "https://colorlib.com/wp/themes/illdy/"
+msgstr ""
+
+#. Description of the theme
+#: style.css
+msgid "Illdy is a stunning multipurpose WordPress theme built based on Bootstrap frontend framework making it fully responsive and mobile friendly. This theme is well suited for business, landing page, portfolio or any other creative websites. This leaves heavy lifting to WordPress Customizer therefore you can create your website on live preview mode. Which means that you can see changes happen on your website in real time as you make them"
+msgstr ""
+
+#. Author of the theme
+#: style.css
+msgid "Colorlib"
+msgstr ""
+
+#. Author URI of the theme
+#: style.css
+msgid "https://colorlib.com"
+msgstr ""
+
+#: 404.php:13
+#: inc/customizer/panels/general-options.php:308
+msgid "OOOPS!"
+msgstr ""
+
+#: 404.php:14
+#: inc/customizer/panels/general-options.php:326
+msgid "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec aliquet lorem ac orci dictum sodales et eget orci. Vestibulum a laoreet dolor. Sed finibus vulputate nisl, at pulvinar nisi commodo ac. Proin placerat auctor libero. Phasellus nec suscipit mi, sed faucibus purus."
+msgstr ""
+
+#: 404.php:15
+#: inc/customizer/panels/general-options.php:347
+msgid "Home"
+msgstr ""
+
+#: 404.php:24
+msgid "404"
+msgstr ""
+
+#: comments.php:23
+#: comments.php:70
+msgid "Comments"
+msgstr ""
+
+#: comments.php:24
+#: comments.php:71
+msgid "Comment navigation"
+msgstr ""
+
+#: comments.php:26
+#: comments.php:74
+msgid "Older Comments"
+msgstr ""
+
+#: comments.php:27
+#: comments.php:75
+msgid "Newer Comments"
+msgstr ""
+
+#. translators: %s: post title
+#: comments.php:38
+#, php-format
+msgctxt "comments title"
+msgid "One thought to &ldquo;%s&rdquo;"
+msgstr ""
+
+#. translators: 1: number of comments, 2: post title
+#: comments.php:43
+#, php-format
+msgctxt "comments title"
+msgid "%1$s thought to &ldquo;%2$s&rdquo;"
+msgid_plural "%1$s thoughts to &ldquo;%2$s&rdquo;"
+msgstr[0] ""
+msgstr[1] ""
+
+#: comments.php:86
+msgid "Comments are closed."
+msgstr ""
+
+#: comments.php:100
+msgid "Name"
+msgstr ""
+
+#: comments.php:101
+msgid "Email"
+msgstr ""
+
+#: comments.php:102
+msgid "Website"
+msgstr ""
+
+#: comments.php:109
+msgid "Message"
+msgstr ""
+
+#: comments.php:111
+msgid "Send"
+msgstr ""
+
+#: comments.php:112
+msgid "Leave a comment"
+msgstr ""
+
+#. translators: %s: name of the comment author being replied to.
+#: comments.php:114
+#, php-format
+msgid "Leave a comment to %s"
+msgstr ""
+
+#. translators: %s: the current year.
+#: footer.php:16
+#: inc/customizer/panels/general-options.php:381
+#, php-format
+msgid "&copy; Copyright %s. All Rights Reserved."
+msgstr ""
+
+#: footer.php:43
+msgid "Products"
+msgstr ""
+
+#: footer.php:43
+msgid "Our work"
+msgstr ""
+
+#: footer.php:43
+msgid "Club"
+msgstr ""
+
+#: footer.php:43
+msgid "News"
+msgstr ""
+
+#: footer.php:43
+msgid "Announcement"
+msgstr ""
+
+#: footer.php:52
+msgid "Information"
+msgstr ""
+
+#: footer.php:52
+msgid "Pricing"
+msgstr ""
+
+#: footer.php:52
+msgid "Terms"
+msgstr ""
+
+#: footer.php:52
+msgid "Affiliates"
+msgstr ""
+
+#: footer.php:52
+msgid "Blog"
+msgstr ""
+
+#: footer.php:61
+#: footer.php:70
+#: inc/admin/class-illdy-welcome.php:120
+msgid "Support"
+msgstr ""
+
+#: footer.php:61
+#: footer.php:70
+#: inc/admin/class-illdy-welcome.php:479
+#: inc/customizer/customizer.php:54
+msgid "Documentation"
+msgstr ""
+
+#: footer.php:61
+#: footer.php:70
+msgid "FAQs"
+msgstr ""
+
+#: footer.php:61
+#: footer.php:70
+msgid "Forums"
+msgstr ""
+
+#: footer.php:61
+#: footer.php:70
+msgid "Contact"
+msgstr ""
+
+#: footer.php:83
+msgid "Theme:"
+msgstr ""
+
+#: footer.php:94
+msgid "Back to top"
+msgstr ""
+
+#: functions.php:402
+msgid "Coffee"
+msgstr ""
+
+#: functions.php:419
+msgid "Primary Menu"
+msgstr ""
+
+#: functions.php:598
+msgid "Previous"
+msgstr ""
+
+#: functions.php:599
+msgid "Next"
+msgstr ""
+
+#. translators: %d: slide number.
+#: functions.php:601
+#, php-format
+msgid "Go to slide %d"
+msgstr ""
+
+#: functions.php:630
+msgid "Blog Sidebar"
+msgstr ""
+
+#: functions.php:632
+msgid "The widgets added in this sidebar will appear in blog page."
+msgstr ""
+
+#: functions.php:643
+msgid "Page Sidebar"
+msgstr ""
+
+#: functions.php:645
+msgid "The widgets added in this sidebar will appear on single pages."
+msgstr ""
+
+#: functions.php:656
+msgid "Footer Sidebar 1"
+msgstr ""
+
+#: functions.php:658
+msgid "The widgets added in this sidebar will appear in first block from footer."
+msgstr ""
+
+#: functions.php:669
+msgid "Footer Sidebar 2"
+msgstr ""
+
+#: functions.php:671
+msgid "The widgets added in this sidebar will appear in second block from footer."
+msgstr ""
+
+#: functions.php:682
+msgid "Footer Sidebar 3"
+msgstr ""
+
+#: functions.php:684
+msgid "The widgets added in this sidebar will appear in third block from footer."
+msgstr ""
+
+#: functions.php:695
+msgid "Footer Sidebar 4"
+msgstr ""
+
+#: functions.php:697
+msgid "The widgets added in this sidebar will appear in fourth block from footer."
+msgstr ""
+
+#: functions.php:708
+msgid "Front page - About Sidebar"
+msgstr ""
+
+#: functions.php:710
+msgid "The widgets added in this sidebar will appear in about section from front page."
+msgstr ""
+
+#: functions.php:721
+msgid "Front page - Projects Sidebar"
+msgstr ""
+
+#: functions.php:723
+msgid "The widgets added in this sidebar will appear in projects section from front page."
+msgstr ""
+
+#: functions.php:734
+msgid "Front page - Services Sidebar"
+msgstr ""
+
+#: functions.php:736
+msgid "The widgets added in this sidebar will appear in services section from front page."
+msgstr ""
+
+#: functions.php:747
+msgid "Front page - Counter Sidebar"
+msgstr ""
+
+#: functions.php:749
+msgid "The widgets added in this sidebar will appear in counter section from front page."
+msgstr ""
+
+#: functions.php:760
+msgid "Front page - Team Sidebar"
+msgstr ""
+
+#: functions.php:762
+msgid "The widgets added in this sidebar will appear in team section from front page."
+msgstr ""
+
+#: functions.php:773
+msgid "Front page - Full Width Section"
+msgstr ""
+
+#: functions.php:775
+msgid "The widgets added in this sidebar will appear in full width section from front page."
+msgstr ""
+
+#: functions.php:786
+msgid "Front page - Testimonials Sidebar"
+msgstr ""
+
+#: functions.php:788
+msgid "The widgets added in this sidebar will appear in testimonials section from front page."
+msgstr ""
+
+#: functions.php:800
+msgid "WooCommerce Sidebar"
+msgstr ""
+
+#: functions.php:802
+msgid "The widgets added in this sidebar will appear in WooCommerce pages."
+msgstr ""
+
+#: functions.php:837
+msgid "Previous page"
+msgstr ""
+
+#: functions.php:838
+msgid "Next page"
+msgstr ""
+
+#: functions.php:839
+msgid "Posts navigation"
+msgstr ""
+
+#: functions.php:840
+msgid "Posts"
+msgstr ""
+
+#: header.php:81
+msgid "Skip to content"
+msgstr ""
+
+#: header.php:105
+#: header.php:123
+msgid "Primary"
+msgstr ""
+
+#: header.php:118
+msgid "Menu"
+msgstr ""
+
+#: inc/admin/class-illdy-plugin-state.php:192
+msgid "Active"
+msgstr ""
+
+#: inc/admin/class-illdy-plugin-state.php:202
+msgid "Installed"
+msgstr ""
+
+#: inc/admin/class-illdy-plugin-state.php:210
+msgid "Activate"
+msgstr ""
+
+#: inc/admin/class-illdy-plugin-state.php:222
+msgid "Not installed"
+msgstr ""
+
+#: inc/admin/class-illdy-plugin-state.php:230
+msgid "Install Now"
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:49
+msgid "Adds the widgets that build the Illdy front page, and the demo content importer. The theme needs it to look like the demo."
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:50
+msgid "Contact forms for the front page contact section, built by the same team."
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:51
+msgid "Restyle the WordPress login screen to match your site."
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:52
+msgid "Put up a coming soon or maintenance page while you build."
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:53
+msgid "Reorder posts, pages and projects by dragging them."
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:54
+msgid "Lightbox for images in posts and the portfolio."
+msgstr ""
+
+#. translators: %s: theme name.
+#: inc/admin/class-illdy-welcome.php:102
+#: inc/admin/class-illdy-welcome.php:104
+#, php-format
+msgid "About %s"
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:118
+msgid "Getting Started"
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:119
+msgid "Recommended Plugins"
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:200
+msgid "You do not have permission to view this page."
+msgstr ""
+
+#. translators: %s: theme name.
+#: inc/admin/class-illdy-welcome.php:212
+#, php-format
+msgid "Welcome to %s"
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:218
+msgid "Illdy is a one-page WordPress theme with a front page you build from widgets. Everything below is optional — the three steps on this tab are the fastest route to a site that looks like the demo."
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:221
+msgid "Secondary menu"
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:279
+msgid "(opens in a new tab)"
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:296
+#: inc/admin/class-illdy-welcome.php:306
+#: inc/customizer/panels/about.php:110
+#: inc/customizer/panels/contact-us.php:145
+#: inc/customizer/panels/latest-news.php:102
+#: inc/customizer/panels/projects.php:135
+#: inc/customizer/panels/services.php:117
+#: inc/customizer/panels/team.php:112
+msgid "Install Illdy Companion"
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:298
+msgid "Done"
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:301
+msgid "The front page sections — About, Projects, Services, Team, Counter, Testimonials — are built from widgets that this free plugin provides. Without it those sections show placeholder content."
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:304
+msgid "See the other recommended plugins"
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:314
+msgid "Import the demo content"
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:316
+msgid "Front page set"
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:319
+msgid "Sets up the front page the way the demo looks: creates the Front Page and Blog pages, fills in the Customizer settings and adds the front page widgets. Optional — you can build everything by hand instead."
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:322
+msgid "Go to the importer"
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:324
+msgid "Available once Illdy Companion is active."
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:332
+msgid "Make it yours"
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:334
+msgid "Everything lives in the Customizer: colours, fonts, the header image or video, and the content of each front page section. Front Page Sections lists them in the order they render, previews changes live, and reorders them by dragging."
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:336
+#: inc/admin/class-illdy-widgets-admin.php:71
+msgid "Edit front page sections"
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:337
+msgid "Open the Customizer"
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:343
+msgid "Read the documentation"
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:344
+msgid "Illdy works differently from most themes: the front page is a stack of widget areas rather than a page you edit. The documentation covers how each section is put together."
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:346
+msgid "Illdy documentation"
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:359
+msgid "All free, all from the WordPress.org plugin directory, and all optional except the first. They install here without leaving this page."
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:364
+msgid "Your account cannot install plugins, so these are listed for reference only."
+msgstr ""
+
+#. translators: %s: plugin version number.
+#: inc/admin/class-illdy-welcome.php:421
+#, php-format
+msgid "Version %s"
+msgstr ""
+
+#. translators: %s: plugin name.
+#: inc/admin/class-illdy-welcome.php:463
+#, php-format
+msgid "More information about %s"
+msgstr ""
+
+#. translators: %s: plugin name.
+#: inc/admin/class-illdy-welcome.php:464
+msgid "More details"
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:480
+msgid "How the front page sections work, what each Customizer option does, and how to set up the theme from scratch."
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:481
+msgid "Read the docs"
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:486
+msgid "Support forum"
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:487
+msgid "Free support for Illdy on WordPress.org. Search first — most questions have already been answered there."
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:488
+msgid "Ask a question"
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:493
+msgid "Leave a review"
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:494
+msgid "Illdy is free and always has been. A review on WordPress.org is the most useful thing you can do in return."
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:495
+msgid "Rate Illdy"
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:500
+msgid "Report a bug"
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:501
+msgid "Found something broken, or want to suggest a change? The theme is developed in the open on GitHub."
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:502
+msgid "Open an issue"
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:523
+msgid "Before you ask"
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:524
+msgid "Two things account for most support questions: the front page is built from widgets rather than page content, and the front page sections only appear when Settings → Reading is set to a static page. Both are covered in step 1 and 2 of Getting Started."
+msgstr ""
+
+#: inc/admin/class-illdy-welcome.php:525
+msgid "Back to Getting Started"
+msgstr ""
+
+#: inc/admin/class-illdy-widgets-admin.php:66
+msgid "Building the Illdy front page?"
+msgstr ""
+
+#: inc/admin/class-illdy-widgets-admin.php:67
+msgid "The front page sections are the widget areas below, but the Customizer shows them in the order they render, previews every change live, and lets you drag the sections to reorder them."
+msgstr ""
+
+#: inc/class-illdy.php:22
+msgid "Accent Color"
+msgstr ""
+
+#: inc/class-illdy.php:23
+msgid "The main color used in Illdy."
+msgstr ""
+
+#: inc/class-illdy.php:29
+msgid "Secondary Accent Color"
+msgstr ""
+
+#: inc/class-illdy.php:30
+msgid "The secondary color used in Illdy."
+msgstr ""
+
+#: inc/class-illdy.php:36
+msgid "Text Color"
+msgstr ""
+
+#: inc/class-illdy.php:37
+msgid "The color used for headings."
+msgstr ""
+
+#: inc/class-illdy.php:44
+msgid "Contrast Color"
+msgstr ""
+
+#: inc/class-illdy.php:45
+msgid "The color used for paragraphs."
+msgstr ""
+
+#: inc/class-illdy.php:51
+msgid "Hover Color"
+msgstr ""
+
+#: inc/class-illdy.php:52
+msgid "The color used for hover on elements."
+msgstr ""
+
+#: inc/components/entry-meta/class-illdy-entry-meta-output.php:55
+msgid "Comments are off for this post"
+msgstr ""
+
+#: inc/components/entry-meta/class-illdy-entry-meta-output.php:59
+msgid "No comments"
+msgstr ""
+
+#. translators: %s: number of comments.
+#: inc/components/entry-meta/class-illdy-entry-meta-output.php:63
+#, php-format
+msgid "%s comment"
+msgid_plural "%s comments"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/components/entry-meta/class-illdy-entry-meta-output.php:85
+msgid ", "
+msgstr ""
+
+#: inc/components/entry-meta/class-illdy-entry-meta-output.php:142
+msgid "Tags: "
+msgstr ""
+
+#: inc/components/related-posts/class-illdy-related-posts-output.php:104
+msgid "Related Articles"
+msgstr ""
+
+#: inc/customizer/class-illdy-kaliforms-custom-control.php:42
+msgid "No contact forms found"
+msgstr ""
+
+#: inc/customizer/class-illdy-kaliforms-custom-control.php:62
+msgid "Select your contact form"
+msgstr ""
+
+#: inc/customizer/controls/class-illdy-control-repeater.php:109
+msgid "Item"
+msgstr ""
+
+#: inc/customizer/controls/class-illdy-control-repeater.php:110
+msgid "Add new"
+msgstr ""
+
+#: inc/customizer/controls/class-illdy-control-repeater.php:155
+msgid "Remove"
+msgstr ""
+
+#: inc/customizer/controls/class-illdy-control-repeater.php:173
+msgid "Image URL"
+msgstr ""
+
+#: inc/customizer/controls/class-illdy-control-repeater.php:175
+msgid "Select image"
+msgstr ""
+
+#: inc/customizer/customizer.php:66
+msgid "Front Page Sections"
+msgstr ""
+
+#: inc/customizer/customizer.php:67
+msgid "Drag & drop to reorder front-page sections"
+msgstr ""
+
+#: inc/customizer/customizer.php:86
+msgid "Color scheme"
+msgstr ""
+
+#: inc/customizer/customizer.php:87
+msgid "Select a color scheme"
+msgstr ""
+
+#: inc/customizer/customizer.php:434
+msgid "You must supply a numeric value"
+msgstr ""
+
+#: inc/customizer/customizer.php:438
+msgid "You must supply a positive number"
+msgstr ""
+
+#: inc/customizer/customizer.php:662
+#: sections/front-page-contact-us.php:113
+msgid "Twitter"
+msgstr ""
+
+#: inc/customizer/customizer.php:665
+#: sections/front-page-contact-us.php:116
+msgid "Facebook"
+msgstr ""
+
+#: inc/customizer/customizer.php:668
+#: sections/front-page-contact-us.php:119
+msgid "LinkedIn"
+msgstr ""
+
+#: inc/customizer/customizer.php:671
+#: sections/front-page-contact-us.php:122
+msgid "Pinterest"
+msgstr ""
+
+#: inc/customizer/customizer.php:674
+#: sections/front-page-contact-us.php:125
+msgid "Instagram"
+msgstr ""
+
+#: inc/customizer/customizer.php:677
+#: sections/front-page-contact-us.php:128
+msgid "YouTube"
+msgstr ""
+
+#: inc/customizer/customizer.php:680
+#: sections/front-page-contact-us.php:131
+msgid "Vimeo"
+msgstr ""
+
+#: inc/customizer/customizer.php:846
+msgid "Invalid value for background repeat."
+msgstr ""
+
+#: inc/customizer/customizer.php:853
+#: inc/customizer/customizer.php:861
+msgid "Invalid value for background size."
+msgstr ""
+
+#: inc/customizer/panels/about.php:16
+msgid "About Section"
+msgstr ""
+
+#: inc/customizer/panels/about.php:17
+msgid "Control various options for about section from front page."
+msgstr ""
+
+#: inc/customizer/panels/about.php:39
+#: inc/customizer/panels/contact-us.php:75
+#: inc/customizer/panels/counter.php:31
+#: inc/customizer/panels/full-width.php:32
+#: inc/customizer/panels/latest-news.php:32
+#: inc/customizer/panels/projects.php:41
+#: inc/customizer/panels/services.php:41
+#: inc/customizer/panels/team.php:36
+#: inc/customizer/panels/testimonials.php:32
+msgid "Show this section?"
+msgstr ""
+
+#: inc/customizer/panels/about.php:50
+#: sections/front-page-about.php:11
+msgid "About"
+msgstr ""
+
+#: inc/customizer/panels/about.php:57
+#: inc/customizer/panels/contact-us.php:93
+#: inc/customizer/panels/full-width.php:69
+#: inc/customizer/panels/jumbotron.php:52
+#: inc/customizer/panels/latest-news.php:50
+#: inc/customizer/panels/projects.php:76
+#: inc/customizer/panels/services.php:59
+#: inc/customizer/panels/team.php:54
+#: inc/customizer/panels/testimonials.php:50
+msgid "Title"
+msgstr ""
+
+#: inc/customizer/panels/about.php:58
+#: inc/customizer/panels/contact-us.php:94
+#: inc/customizer/panels/full-width.php:70
+#: inc/customizer/panels/latest-news.php:51
+#: inc/customizer/panels/projects.php:77
+#: inc/customizer/panels/services.php:60
+#: inc/customizer/panels/team.php:55
+#: inc/customizer/panels/testimonials.php:51
+msgid "Add the title for this section."
+msgstr ""
+
+#: inc/customizer/panels/about.php:78
+#: sections/front-page-about.php:12
+msgid "It is an amazing one-page theme with great features that offers an incredible experience. It is easy to install, make changes, adapt for your business. A modern design with clean lines and styling for a wide variety of content, exactly how a business design should be. You can add as many images as you want to the main header area and turn them into slider."
+msgstr ""
+
+#: inc/customizer/panels/about.php:87
+#: inc/customizer/panels/contact-us.php:122
+#: inc/customizer/panels/full-width.php:95
+#: inc/customizer/panels/jumbotron.php:82
+#: inc/customizer/panels/latest-news.php:79
+#: inc/customizer/panels/projects.php:105
+#: inc/customizer/panels/services.php:88
+#: inc/customizer/panels/team.php:83
+msgid "Entry"
+msgstr ""
+
+#. translators: %s: URL of the Recommended Plugins tab where Illdy Companion can be installed.
+#: inc/customizer/panels/about.php:112
+#: inc/customizer/panels/contact-us.php:147
+#: inc/customizer/panels/latest-news.php:104
+#: inc/customizer/panels/projects.php:137
+#: inc/customizer/panels/services.php:119
+#: inc/customizer/panels/team.php:114
+#, php-format
+msgid "In order to edit description please install <a href=\"%s\" target=\"_blank\">Illdy Companion</a>"
+msgstr ""
+
+#: inc/customizer/panels/about.php:141
+msgid "Add & Edit skill bars"
+msgstr ""
+
+#: inc/customizer/panels/about.php:166
+#: inc/customizer/panels/full-width.php:144
+#: inc/customizer/panels/jumbotron.php:199
+#: inc/customizer/panels/latest-news.php:214
+#: inc/customizer/panels/projects.php:184
+#: inc/customizer/panels/services.php:165
+#: inc/customizer/panels/team.php:161
+#: inc/customizer/panels/testimonials.php:101
+msgid "Colors"
+msgstr ""
+
+#: inc/customizer/panels/about.php:175
+#: inc/customizer/panels/full-width.php:154
+#: inc/customizer/panels/jumbotron.php:214
+#: inc/customizer/panels/latest-news.php:233
+#: inc/customizer/panels/projects.php:193
+#: inc/customizer/panels/services.php:174
+#: inc/customizer/panels/team.php:170
+#: inc/customizer/panels/testimonials.php:113
+msgid "Backgrounds"
+msgstr ""
+
+#: inc/customizer/panels/about.php:203
+#: inc/customizer/panels/counter.php:76
+#: inc/customizer/panels/full-width.php:182
+#: inc/customizer/panels/jumbotron.php:272
+#: inc/customizer/panels/latest-news.php:261
+#: inc/customizer/panels/projects.php:221
+#: inc/customizer/panels/services.php:202
+#: inc/customizer/panels/team.php:198
+#: inc/customizer/panels/testimonials.php:141
+msgid "Background Image"
+msgstr ""
+
+#: inc/customizer/panels/about.php:230
+#: inc/customizer/panels/full-width.php:209
+#: inc/customizer/panels/jumbotron.php:300
+#: inc/customizer/panels/latest-news.php:288
+#: inc/customizer/panels/projects.php:248
+#: inc/customizer/panels/services.php:229
+#: inc/customizer/panels/team.php:225
+#: inc/customizer/panels/testimonials.php:168
+msgid "Background Position"
+msgstr ""
+
+#: inc/customizer/panels/about.php:250
+#: inc/customizer/panels/full-width.php:229
+#: inc/customizer/panels/jumbotron.php:321
+#: inc/customizer/panels/latest-news.php:308
+#: inc/customizer/panels/projects.php:268
+#: inc/customizer/panels/services.php:249
+#: inc/customizer/panels/team.php:245
+#: inc/customizer/panels/testimonials.php:188
+msgid "Image Size"
+msgstr ""
+
+#: inc/customizer/panels/about.php:254
+#: inc/customizer/panels/full-width.php:233
+#: inc/customizer/panels/jumbotron.php:325
+#: inc/customizer/panels/latest-news.php:312
+#: inc/customizer/panels/projects.php:272
+#: inc/customizer/panels/services.php:253
+#: inc/customizer/panels/team.php:249
+#: inc/customizer/panels/testimonials.php:192
+msgid "Original"
+msgstr ""
+
+#: inc/customizer/panels/about.php:255
+#: inc/customizer/panels/full-width.php:234
+#: inc/customizer/panels/jumbotron.php:326
+#: inc/customizer/panels/latest-news.php:313
+#: inc/customizer/panels/projects.php:273
+#: inc/customizer/panels/services.php:254
+#: inc/customizer/panels/team.php:250
+#: inc/customizer/panels/testimonials.php:193
+msgid "Fit to Screen"
+msgstr ""
+
+#: inc/customizer/panels/about.php:256
+#: inc/customizer/panels/full-width.php:235
+#: inc/customizer/panels/jumbotron.php:327
+#: inc/customizer/panels/latest-news.php:314
+#: inc/customizer/panels/projects.php:274
+#: inc/customizer/panels/services.php:255
+#: inc/customizer/panels/team.php:251
+#: inc/customizer/panels/testimonials.php:194
+msgid "Fill Screen"
+msgstr ""
+
+#: inc/customizer/panels/about.php:274
+#: inc/customizer/panels/full-width.php:253
+#: inc/customizer/panels/jumbotron.php:346
+#: inc/customizer/panels/latest-news.php:332
+#: inc/customizer/panels/projects.php:292
+#: inc/customizer/panels/services.php:273
+#: inc/customizer/panels/team.php:269
+#: inc/customizer/panels/testimonials.php:212
+msgid "Repeat Background Image"
+msgstr ""
+
+#: inc/customizer/panels/about.php:292
+#: inc/customizer/panels/full-width.php:271
+#: inc/customizer/panels/jumbotron.php:365
+#: inc/customizer/panels/latest-news.php:350
+#: inc/customizer/panels/projects.php:310
+#: inc/customizer/panels/services.php:291
+#: inc/customizer/panels/team.php:287
+#: inc/customizer/panels/testimonials.php:231
+msgid "Fixed background (it stays put while the page scrolls)"
+msgstr ""
+
+#: inc/customizer/panels/about.php:311
+#: inc/customizer/panels/counter.php:98
+#: inc/customizer/panels/full-width.php:290
+#: inc/customizer/panels/jumbotron.php:516
+#: inc/customizer/panels/latest-news.php:371
+#: inc/customizer/panels/projects.php:329
+#: inc/customizer/panels/services.php:310
+#: inc/customizer/panels/team.php:305
+#: inc/customizer/panels/testimonials.php:250
+msgid "Background Color"
+msgstr ""
+
+#: inc/customizer/panels/about.php:331
+#: inc/customizer/panels/full-width.php:310
+#: inc/customizer/panels/jumbotron.php:600
+#: inc/customizer/panels/latest-news.php:390
+#: inc/customizer/panels/projects.php:349
+#: inc/customizer/panels/services.php:330
+#: inc/customizer/panels/team.php:325
+#: inc/customizer/panels/testimonials.php:270
+msgid "Title Color"
+msgstr ""
+
+#: inc/customizer/panels/about.php:351
+#: inc/customizer/panels/full-width.php:330
+#: inc/customizer/panels/jumbotron.php:640
+#: inc/customizer/panels/latest-news.php:410
+#: inc/customizer/panels/projects.php:369
+#: inc/customizer/panels/services.php:350
+#: inc/customizer/panels/team.php:345
+msgid "Description Color"
+msgstr ""
+
+#: inc/customizer/panels/blog-options.php:11
+msgid "Blog Jumbotron Titles"
+msgstr ""
+
+#: inc/customizer/panels/blog-options.php:20
+msgid "The tagline will be shown on archive pages, in the blog page right below the title."
+msgstr ""
+
+#: inc/customizer/panels/blog-options.php:29
+msgid "Blog Options"
+msgstr ""
+
+#: inc/customizer/panels/blog-options.php:30
+msgid "You can change blog options "
+msgstr ""
+
+#: inc/customizer/panels/blog-options.php:38
+msgid "Blog Archive Header Image"
+msgstr ""
+
+#: inc/customizer/panels/blog-options.php:51
+msgid "Background Stretch"
+msgstr ""
+
+#: inc/customizer/panels/blog-options.php:55
+msgid "Cover"
+msgstr ""
+
+#: inc/customizer/panels/blog-options.php:56
+msgid "Contain"
+msgstr ""
+
+#: inc/customizer/panels/blog-options.php:68
+msgid "Blog Featured Image"
+msgstr ""
+
+#: inc/customizer/panels/blog-options.php:69
+msgid "From this section you'll be able to control various single post (blog) settings."
+msgstr ""
+
+#: inc/customizer/panels/blog-options.php:86
+msgid "Random featured image"
+msgstr ""
+
+#: inc/customizer/panels/blog-options.php:87
+msgid "Toggling this to off will disable theme provided blog images. These images are used in the theme when users don't provide a featured image. It's purposes is merely cosmetic and meant to improve the blog layout."
+msgstr ""
+
+#: inc/customizer/panels/blog-options.php:100
+msgid "Single Post Options"
+msgstr ""
+
+#: inc/customizer/panels/blog-options.php:101
+msgid "This section allows you to control how certain elements are displayed on the blog single page."
+msgstr ""
+
+#: inc/customizer/panels/blog-options.php:119
+msgid "Show Posted on"
+msgstr ""
+
+#: inc/customizer/panels/blog-options.php:120
+msgid "This will disable the posted on zone as well as the author name"
+msgstr ""
+
+#: inc/customizer/panels/blog-options.php:137
+msgid "Show category"
+msgstr ""
+
+#: inc/customizer/panels/blog-options.php:138
+msgid "This will disable the posted in zone."
+msgstr ""
+
+#: inc/customizer/panels/blog-options.php:156
+msgid "Show tags"
+msgstr ""
+
+#: inc/customizer/panels/blog-options.php:157
+msgid "This will disable the tagged with zone."
+msgstr ""
+
+#: inc/customizer/panels/blog-options.php:175
+msgid "Show comments number"
+msgstr ""
+
+#: inc/customizer/panels/blog-options.php:176
+msgid "This will disable the comments header zone."
+msgstr ""
+
+#: inc/customizer/panels/blog-options.php:193
+msgid "Show author box"
+msgstr ""
+
+#: inc/customizer/panels/blog-options.php:194
+msgid "Displayed right at the end of the post"
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:12
+msgid "Contact us Section"
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:13
+msgid "Control various options for contact us section from front page."
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:36
+msgid "General"
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:41
+msgid "Details"
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:86
+#: sections/front-page-contact-us.php:23
+msgid "Contact us"
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:113
+#: sections/front-page-contact-us.php:24
+msgid "And we will get in touch as soon as possible."
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:168
+#: sections/front-page-contact-us.php:26
+msgid "Address"
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:175
+msgid "Address Title"
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:192
+#: sections/front-page-contact-us.php:27
+msgid "Customer Support"
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:199
+msgid "Customer Support Title"
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:223
+msgid "Select the contact form you'd like to display (powered by Kaliforms)"
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:245
+#: inc/customizer/panels/contact-us.php:268
+msgid "Contact Form Creation"
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:246
+msgid "Install"
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:246
+msgid "and select a contact form to work this setting."
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:269
+msgid "Create a contact form from "
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:295
+msgid "Facebook URL"
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:323
+msgid "X (Twitter) URL"
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:343
+msgid "LinkedIn URL"
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:364
+msgid "Pinterest URL"
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:384
+msgid "Instagram URL"
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:404
+msgid "YouTube URL"
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:424
+msgid "Vimeo URL"
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:436
+#: sections/front-page-contact-us.php:19
+msgid "contact@site.com"
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:444
+msgid "Email addr."
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:463
+#: sections/front-page-contact-us.php:20
+msgid "(555) 555-5555"
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:471
+msgid "Phone number"
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:489
+#: sections/front-page-contact-us.php:21
+msgid "Street 221B Baker Street, "
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:497
+msgid "Address 1"
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:514
+#: sections/front-page-contact-us.php:22
+msgid "London, UK"
+msgstr ""
+
+#: inc/customizer/panels/contact-us.php:522
+msgid "Address 2"
+msgstr ""
+
+#: inc/customizer/panels/counter.php:12
+msgid "Counter Section"
+msgstr ""
+
+#: inc/customizer/panels/counter.php:13
+msgid "*In order to get this section to show up on the front-page, make sure you have: 1) enabled static front-page & 2) have a widget placed in this sidebar. More specifically go to Widgets -> Front page - counter sidebar & place the [Illdy] - Counter widget in here."
+msgstr ""
+
+#: inc/customizer/panels/counter.php:50
+#: inc/customizer/panels/jumbotron.php:246
+msgid "Type of Background"
+msgstr ""
+
+#: inc/customizer/panels/counter.php:55
+#: inc/customizer/panels/jumbotron.php:251
+msgid "Image"
+msgstr ""
+
+#: inc/customizer/panels/counter.php:56
+msgid "Color"
+msgstr ""
+
+#: inc/customizer/panels/counter.php:117
+msgid "Add & Edit Counters"
+msgstr ""
+
+#: inc/customizer/panels/full-width.php:13
+msgid "Full Width Section"
+msgstr ""
+
+#: inc/customizer/panels/full-width.php:14
+msgid "Control title and description of full width section."
+msgstr ""
+
+#: inc/customizer/panels/full-width.php:51
+msgid "Add padding to the section"
+msgstr ""
+
+#: inc/customizer/panels/full-width.php:120
+msgid "Add & Edit widgets"
+msgstr ""
+
+#: inc/customizer/panels/full-width.php:350
+msgid "Title & Description Color for Full & Small Parallax Widget"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:14
+msgid "The site logo is used as a graphical representation of your company name."
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:15
+msgid "Site logo"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:34
+msgid "General Options"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:35
+msgid "You can change the site layout in this area as well as your contact details (the ones displayed in the header & footer) "
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:46
+msgid "Header"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:64
+msgid "Enable the sticky header"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:82
+msgid "Sticky header background color"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:83
+msgid "Controls the background color for header when this is sticky"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:105
+msgid "Enable featured image as header image"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:106
+msgid "This will remove the featured image from inside the post content and use it in the jumbotron as a background image. Works for single posts & pages."
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:118
+msgid "Preloader"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:136
+msgid "Enable the site preloader"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:155
+msgid "Preloader background color"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:156
+msgid "Controls the background color for the container the preloader is displayed on"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:177
+msgid "Preloader primary color"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:178
+msgid "Controls the color of the loading bar & of the percentage."
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:199
+msgid "Preloader secondary color"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:200
+msgid "Controls the color outline of the preloader (the border)"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:215
+msgid "Logo"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:245
+msgid "Logo Width"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:246
+msgid "Site logo width (in pixels)"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:267
+msgid "Text logo (company name)"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:268
+msgid "This field is best used when you don't have an image logo or simply prefer using a text as your logo / company name."
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:280
+msgid "404 Page"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:281
+msgid "From this section, you'll be able to alter texts from 404 page"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:290
+#: sections/blog-bottom-header.php:20
+msgid "Page not found"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:298
+msgid "404 Page Title"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:316
+msgid "404 Page Subtitle"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:336
+msgid "404 Page Entry"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:355
+msgid "404 Page Button Label"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:367
+msgid "Footer"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:368
+msgid "From this section, you'll be able to alter the footer settings. Manage your copyright message as well as the logo shown in the footer of the theme."
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:389
+msgid "Footer Copyright"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:390
+msgid "Use this to display your company copyright message. {year} shows the current year."
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:408
+msgid "Enable the go to top icon"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:425
+msgid "Show footer widget area?"
+msgstr ""
+
+#: inc/customizer/panels/general-options.php:442
+msgid "Show footer copyright area?"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:12
+msgid "Jumbotron Section"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:13
+msgid "Control various jumbotron related settings. Will only be displayed if a <strong>custom front-page is set in Settings -> Reading.</strong>"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:33
+msgid "Enable parallax effect"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:34
+msgid "Enabling this will add a parallax scrolling effect for the header image."
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:43
+#: sections/front-page-bottom-header.php:11
+#: sections/front-page-bottom-header.php:18
+msgid "Clean <span class=\"span-dot\">.</span> Slick<span class=\"span-dot\">.</span> Pixel Perfect"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:73
+#: sections/front-page-bottom-header.php:12
+msgid "Illdy is a great one-page theme, perfect for developers and designers but also for someone who just wants a new website for his business. Try it now!"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:104
+#: sections/front-page-bottom-header.php:13
+msgid "Learn more"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:111
+msgid "First button title"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:134
+msgid "First button URL"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:146
+#: sections/front-page-bottom-header.php:15
+msgid "Download"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:153
+msgid "Second button title"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:176
+msgid "Second button URL"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:252
+msgid "Slider"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:253
+msgid "Video"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:393
+msgid "Header Video"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:397
+#: inc/customizer/panels/jumbotron.php:400
+msgid "Select Video"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:398
+msgid "Change Video"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:399
+msgid "No video selected"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:401
+msgid "Choose Video"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:411
+msgid "Or, enter a YouTube URL:"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:432
+msgid "Slides"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:433
+msgid "Add new entries"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:434
+msgid "Slide"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:437
+msgid "Slide Image"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:458
+msgid "Slider autoplay"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:475
+msgid "Slider Timeout"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:476
+msgid "Autoplay interval timeout."
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:494
+msgid "Slider navigation"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:537
+msgid "First Button Background Color"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:558
+msgid "Second Button Background Color"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:579
+msgid "Second Button Hover Background Color"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:620
+msgid "Title Points Color"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:660
+msgid "Left Button Text Color"
+msgstr ""
+
+#: inc/customizer/panels/jumbotron.php:680
+msgid "Right Button Text Color"
+msgstr ""
+
+#: inc/customizer/panels/latest-news.php:12
+msgid "Latest News Section"
+msgstr ""
+
+#: inc/customizer/panels/latest-news.php:13
+msgid "Control various options for latest news section from front page."
+msgstr ""
+
+#: inc/customizer/panels/latest-news.php:43
+#: sections/front-page-latest-news.php:17
+msgid "Latest News"
+msgstr ""
+
+#: inc/customizer/panels/latest-news.php:70
+msgid "If you are interested in the latest articles in the industry, take a sneak peek at our blog. You have nothing to lose!"
+msgstr ""
+
+#: inc/customizer/panels/latest-news.php:127
+#: sections/front-page-latest-news.php:19
+msgid "See blog"
+msgstr ""
+
+#: inc/customizer/panels/latest-news.php:134
+msgid "Button Text"
+msgstr ""
+
+#: inc/customizer/panels/latest-news.php:135
+msgid "Add the button text for this section."
+msgstr ""
+
+#: inc/customizer/panels/latest-news.php:161
+msgid "Number of posts"
+msgstr ""
+
+#: inc/customizer/panels/latest-news.php:162
+msgid "Add the number of posts to show in this section."
+msgstr ""
+
+#: inc/customizer/panels/latest-news.php:185
+msgid "Number of words in post entry"
+msgstr ""
+
+#: inc/customizer/panels/latest-news.php:430
+msgid "Blog Button Background Color"
+msgstr ""
+
+#: inc/customizer/panels/latest-news.php:450
+msgid "Blog Button Hover Background Color"
+msgstr ""
+
+#: inc/customizer/panels/latest-news.php:473
+msgid "Blog Button Text Color"
+msgstr ""
+
+#: inc/customizer/panels/latest-news.php:494
+msgid "Post Box Background Color"
+msgstr ""
+
+#: inc/customizer/panels/latest-news.php:514
+msgid "Post Title Color"
+msgstr ""
+
+#: inc/customizer/panels/latest-news.php:534
+msgid "Post Title Hover Color"
+msgstr ""
+
+#: inc/customizer/panels/latest-news.php:554
+msgid "Post Content Color"
+msgstr ""
+
+#: inc/customizer/panels/latest-news.php:574
+msgid "Post \"Read more\" Color"
+msgstr ""
+
+#: inc/customizer/panels/latest-news.php:594
+msgid "Post \"Read more\" Hover Color"
+msgstr ""
+
+#: inc/customizer/panels/projects.php:17
+msgid "Projects Section"
+msgstr ""
+
+#: inc/customizer/panels/projects.php:18
+msgid "Control various options for projects section from front page."
+msgstr ""
+
+#: inc/customizer/panels/projects.php:58
+msgid "Enable lightbox"
+msgstr ""
+
+#: inc/customizer/panels/projects.php:69
+#: sections/front-page-projects.php:11
+msgid "Projects"
+msgstr ""
+
+#: inc/customizer/panels/projects.php:96
+#: sections/front-page-projects.php:12
+msgid "You'll love our work. Check it out!"
+msgstr ""
+
+#: inc/customizer/panels/projects.php:158
+msgid "Add & Edit Projects"
+msgstr ""
+
+#: inc/customizer/panels/services.php:17
+msgid "Services Section"
+msgstr ""
+
+#: inc/customizer/panels/services.php:18
+msgid "Control various options for services section from front page."
+msgstr ""
+
+#: inc/customizer/panels/services.php:52
+#: sections/front-page-services.php:11
+msgid "Services"
+msgstr ""
+
+#: inc/customizer/panels/services.php:79
+#: sections/front-page-services.php:12
+msgid "In order to help you grow your business, our carefully selected experts can advise you in the following areas:"
+msgstr ""
+
+#: inc/customizer/panels/services.php:139
+msgid "Add & Edit Services"
+msgstr ""
+
+#: inc/customizer/panels/team.php:16
+msgid "Team Section"
+msgstr ""
+
+#: inc/customizer/panels/team.php:17
+msgid "Control various options for team section from front page."
+msgstr ""
+
+#: inc/customizer/panels/team.php:47
+#: sections/front-page-team.php:11
+msgid "Team"
+msgstr ""
+
+#: inc/customizer/panels/team.php:74
+#: sections/front-page-team.php:12
+msgid "Meet the people that are going to take your business to the next level."
+msgstr ""
+
+#: inc/customizer/panels/team.php:135
+msgid "Add & Edit Members"
+msgstr ""
+
+#: inc/customizer/panels/testimonials.php:12
+msgid "Testimonials Section"
+msgstr ""
+
+#: inc/customizer/panels/testimonials.php:13
+msgid "Control various options for testimonials section from front page."
+msgstr ""
+
+#: inc/customizer/panels/testimonials.php:43
+#: sections/front-page-testimonials-widget.php:11
+msgid "Testimonials"
+msgstr ""
+
+#: inc/customizer/panels/testimonials.php:75
+msgid "Add & Edit Testimonials"
+msgstr ""
+
+#: inc/customizer/panels/testimonials.php:290
+msgid "Testimonial Container Color"
+msgstr ""
+
+#: inc/customizer/panels/testimonials.php:310
+msgid "Testimonial Content Color"
+msgstr ""
+
+#: inc/customizer/panels/testimonials.php:330
+msgid "Testimonial Author Text Color"
+msgstr ""
+
+#: inc/customizer/panels/testimonials.php:350
+msgid "Testimonial Dots Color"
+msgstr ""
+
+#: inc/extras.php:33
+msgid "Pingback:"
+msgstr ""
+
+#: inc/extras.php:33
+msgid "(Edit)"
+msgstr ""
+
+#. translators: 1: comment date, 2: comment time.
+#: inc/extras.php:52
+#, php-format
+msgid "%1$s at %2$s"
+msgstr ""
+
+#: inc/extras.php:59
+msgid "Your comment is awaiting moderation."
+msgstr ""
+
+#: inc/extras.php:861
+msgid "Pause"
+msgstr ""
+
+#: inc/extras.php:862
+msgid "Play"
+msgstr ""
+
+#: inc/extras.php:863
+msgid "Video is paused."
+msgstr ""
+
+#: inc/extras.php:864
+msgid "Video is playing."
+msgstr ""
+
+#. Template Name of the theme
+msgid "Left Sidebar"
+msgstr ""
+
+#. Template Name of the theme
+msgid "No Sidebar"
+msgstr ""
+
+#: searchform.php:27
+msgctxt "label"
+msgid "Search for:"
+msgstr ""
+
+#: searchform.php:29
+msgctxt "submit button"
+msgid "Search"
+msgstr ""
+
+#: searchform.php:30
+msgctxt "placeholder"
+msgid "Search..."
+msgstr ""
+
+#. translators: %s: the search query.
+#: sections/blog-bottom-header.php:45
+#, php-format
+msgid "Search results for: %s"
+msgstr ""
+
+#: sections/front-page-about.php:58
+msgid "Typography"
+msgstr ""
+
+#: sections/front-page-about.php:59
+msgid "Design"
+msgstr ""
+
+#: sections/front-page-about.php:60
+msgid "Development"
+msgstr ""
+
+#: sections/front-page-contact-us.php:100
+msgid "E-mail:"
+msgstr ""
+
+#: sections/front-page-contact-us.php:104
+msgid "Phone:"
+msgstr ""
+
+#: sections/front-page-header-slider.php:33
+msgid "Previous slide"
+msgstr ""
+
+#: sections/front-page-header-slider.php:36
+msgid "Next slide"
+msgstr ""
+
+#: sections/front-page-latest-news.php:18
+msgid "If you are interested in the latest articles in the industry, take a sneak peek at our blog. You have got nothing to lose!"
+msgstr ""
+
+#: sections/front-page-latest-news.php:88
+#: template-parts/content.php:27
+msgid "Read more"
+msgstr ""
+
+#: sections/front-page-projects.php:60
+msgid "Project 1"
+msgstr ""
+
+#: sections/front-page-projects.php:61
+msgid "Project 2"
+msgstr ""
+
+#: sections/front-page-projects.php:62
+msgid "Project 3"
+msgstr ""
+
+#: sections/front-page-projects.php:63
+msgid "Project 4"
+msgstr ""
+
+#: sections/front-page-services.php:55
+msgid "Web Design"
+msgstr ""
+
+#: sections/front-page-services.php:55
+#: sections/front-page-services.php:56
+#: sections/front-page-services.php:57
+msgid "Consectetur adipiscing elit. Praesent molestie urna hendrerit erat tincidunt tempus. Aliquam a leo risus. Fusce a metus non augue dapibus porttitor at in mauris. Pellentesque commodo..."
+msgstr ""
+
+#: sections/front-page-services.php:56
+msgid "Web Development"
+msgstr ""
+
+#: sections/front-page-services.php:57
+msgid "SEO Analysis"
+msgstr ""
+
+#: sections/front-page-team.php:55
+msgid "Mark Lawrance"
+msgstr ""
+
+#: sections/front-page-team.php:55
+msgid "Web Designer"
+msgstr ""
+
+#: sections/front-page-team.php:55
+msgid "Creative, detail-oriented, always focused."
+msgstr ""
+
+#: sections/front-page-team.php:56
+msgid "Jane Stenton"
+msgstr ""
+
+#: sections/front-page-team.php:56
+msgid "SEO Specialist"
+msgstr ""
+
+#: sections/front-page-team.php:56
+msgid "Curious, tech-geek and gets serious when it comes to work."
+msgstr ""
+
+#: sections/front-page-team.php:57
+msgid "John Smith"
+msgstr ""
+
+#: sections/front-page-team.php:57
+msgid "Developer"
+msgstr ""
+
+#: sections/front-page-team.php:57
+msgid "Enthusiastic, passionate with great sense of humor."
+msgstr ""
+
+#: sections/front-page-testimonials-widget.php:59
+#: sections/front-page-testimonials-widget.php:60
+#: sections/front-page-testimonials-widget.php:61
+msgid "Jane Smith"
+msgstr ""
+
+#: sections/front-page-testimonials-widget.php:59
+#: sections/front-page-testimonials-widget.php:60
+#: sections/front-page-testimonials-widget.php:61
+msgid "Awesome theme with great design and helpful support. If you do not know how to code your own WordPress theme, but you still want a good-looking website for your business, Illdy might be exactly what you need. It is a slick theme with a lot of features to choose from. You can customize whatever section you want and you can rest assure that no matter what device your website is viewed on it looks great."
+msgstr ""
+
+#: sidebar.php:22
+msgid "Categories"
+msgstr ""
+
+#: sidebar.php:23
+msgid "Archive"
+msgstr ""
+
+#: template-parts/content-none.php:10
+msgid "Nothing Found"
+msgstr ""
+
+#. translators: %1$s: URL of the new post screen.
+#: template-parts/content-none.php:17
+#, php-format
+msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr ""
+
+#: template-parts/content-none.php:23
+msgid "Nothing matched your search terms. Please try again with some different keywords."
+msgstr ""
+
+#: template-parts/content-none.php:26
+msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+msgstr ""
+
+#: template-parts/content-page.php:28
+#: template-parts/content-single.php:30
+msgid "Pages:"
+msgstr ""
+
+#: template-parts/content.php:11
+msgid "Featured"
+msgstr ""
+
+#: woocommerce.php:43
+msgid "Cart"
+msgstr ""
+
+#: woocommerce.php:44
+msgid "Product Categories"
+msgstr ""
